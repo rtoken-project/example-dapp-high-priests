@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'roobert_bold';
+  src: url('fonts/roobert-bold-webfont.woff2') format('woff2'),
+       url('fonts/roobert-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'roobert_semibold';
+  src: url('fonts/roobertsemibold-webfont.woff2') format('woff2'),
+       url('fonts/roobertsemibold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'roobert_medium';
+  src: url('fonts/roobertmedium-webfont.woff2') format('woff2'),
+       url('fonts/roobertmedium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
