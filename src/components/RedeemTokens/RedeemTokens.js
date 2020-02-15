@@ -1,12 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 
-import RedeemDappy from "./RedeemDappy"
-
-const RedeemTokens = () => (
-  <>
-    <RedeemDappy />
-  </>
-)
+const RedeemTokens = () => <>Redeem</>
 
 export default RedeemTokens
