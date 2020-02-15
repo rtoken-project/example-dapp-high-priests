@@ -28,7 +28,7 @@ const Loading = props => {
   }
 }
 
-const Garden = () => {
+const Leaderboard = () => {
   const [context, setContext] = useContext(Context)
 
   const [state, setState] = useState({})
@@ -45,7 +45,7 @@ const Garden = () => {
     }
   }, [])
 
-  return <>Grove</>
+  return <>Leaderboard info</>
 }
 
-export default Garden
+export default Leaderboard

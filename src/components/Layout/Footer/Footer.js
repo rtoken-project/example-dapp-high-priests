@@ -52,14 +52,14 @@ const FooterContainer = styled.div`
 const Footer = () => (
   <FooterContainer>
     <StyledLink
-      href="http://dappy.dev/"
+      href="http://rdai.money/"
       target="_blank"
       rel="noopener noreferrer"
     >
-      Made with Dappy
+      Made with rDAI
     </StyledLink>
     <StyledLink
-      href="https://gitcoin.co/grants/221/dappy-by-one-click-dapp"
+      href="https://gitcoin.co/grants/250/rdai-2"
       target="_blank"
       rel="noopener noreferrer"
     >

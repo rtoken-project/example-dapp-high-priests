@@ -24,14 +24,14 @@ const Loading = props => {
   }
 }
 
-const LoadableGarden = Loadable({
-  loader: () => import("../components/Garden/Garden"),
+const LoadableHighPriest = Loadable({
+  loader: () => import("../components/HighPriest/HighPriest"),
   loading: Loading,
   delay: 300, // 0.3 seconds
   timeout: 10000, // 10 seconds
 })
 
-const GrovePage = () => {
+const HighPriestPage = () => {
   return (
     <Layout>
       <SEO
@@ -39,9 +39,9 @@ const GrovePage = () => {
         description="Check out my grove here."
         image="https://imgur.com/ldBwSph.png"
       />
-      <LoadableGarden />
+      <LoadableHighPriest />
     </Layout>
   )
 }
 
-export default GrovePage
+export default HighPriestPage

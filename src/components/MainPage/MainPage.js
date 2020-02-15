@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
+import vitalik from '../../images/vitalik.png';
 
 import "../fonts.css"
 
@@ -89,6 +90,60 @@ const LearnButton = styled(Link)`
     transition: transform 0.2s ease;
   }
 `
+const CardContainer = styled.div`
+  display: flex;
+`
+
+const Card = styled.div`
+  margin: 1.5em;
+  width: 250px;
+  background: white;
+  border-radius: 1em;
+  box-shadow: 0px 0px 15px #000;
+  padding: 2em;
+`
+const CardTitle = styled.div`
+  font-size:1.1em;
+  font-weight:600;
+`
+const CardText = styled.div`
+  font-size:0.9em;
+  font-weight: 300;
+`
+const Avatar = styled.div`
+  width: 90px;
+  height: 90px;
+  margin: 0.4em auto 1em auto;
+  border-radius:100%;
+  background-size: cover;
+`
+
+const PriestList = [
+  {
+    name: "Vitalik",
+    avatar: "vitalik.png",
+    text: "Vitalik, impress. Happy, clapping, Vitalik is impress",
+    projects: ["rdai", "tornado", "moloch"]
+  },
+  {
+    name: "Vitalik",
+    avatar: "vitalik.png",
+    text: "Vitalik, impress. Happy, clapping, Vitalik is impress",
+    projects: ["rdai", "tornado", "moloch"]
+  }
+]
+
+const cardMap = PriestList.map(item => {
+  return(
+    <Card>
+      <Avatar
+        style={{ backgroundImage: `url(${require("../../images/" + item.avatar)})` }}
+      />
+      <CardTitle>{ item.name }</CardTitle>
+      <CardText>{ item.text }</CardText>
+    </Card>
+  )
+})
 
 const MainPage = () => {
   const updateStats = async () => {
@@ -103,12 +158,16 @@ const MainPage = () => {
     <Container>
       <H1>High Priests</H1>
       <P>
-        Plant trees for free using interest your DAI generates. 10 trees are
-        planted for every $1 of interest. <br />
-        Stop donating at any time.
+        Donate to Open Source the interest your DAI generates<br />
+        Help fund teams building public goods on Ethereum <br />
+        You can stop donating at any time.
       </P>
       <LearnButton to="/about">Learn how it works</LearnButton>
-      <StarterContainer></StarterContainer>
+      <StarterContainer>
+        <CardContainer>
+          { cardMap }
+        </CardContainer>
+      </StarterContainer>
       <StatsContainer></StatsContainer>
     </Container>
   )
