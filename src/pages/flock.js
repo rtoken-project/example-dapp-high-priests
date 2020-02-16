@@ -5,6 +5,7 @@ import Loadable from "react-loadable"
 
 const Loading = props => {
   if (props.error) {
+    console.log(props.error)
     return (
       <div>
         Error! <button onClick={() => location.reload()}>Retry</button>

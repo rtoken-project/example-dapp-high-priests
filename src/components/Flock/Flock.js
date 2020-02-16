@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import Tribute from "tribute-utils"
-import Loadable from "react-loadable"
 import RTokenAnalytics from "rtoken-analytics"
 let CryptoJS = require("crypto-js")
 import { navigate } from "gatsby"
@@ -12,9 +11,11 @@ import axios from "axios"
 const API_URL = "https://api.rdai.money"
 import hat from "../../images/hat.svg"
 import ethers from "ethers"
+import DappyModule from "./DappyModule"
 
 const Loading = props => {
   if (props.error) {
+    console.log(props.error)
     return (
       <div>
         Error! <button onClick={() => location.reload()}>Retry</button>
@@ -75,35 +76,6 @@ const Profile = styled.div`
   div {
     display: flex;
     flex-direction: row;
-  }
-`
-const DappyWidget = styled.div`
-  width: 310px;
-  margin-left: auto;
-  height: 400px;
-  background: linear-gradient(198.2deg, #ffd765 1.54%, #f7c444 89.85%);
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  text-align: center;
-  padding: 10px;
-
-  img {
-    margin-top: 20px;
-  }
-
-  h3 {
-    margin-top: 40px;
-    font-family: "roobert_medium", sans-serif;
-    font-size: 32px;
-    color: white;
-  }
-
-  p {
-    font-family: "roobert_medium", sans-serif;
-    font-size: 18px;
-    color: black;
   }
 `
 
@@ -238,45 +210,14 @@ const Followers = styled.div`
   }
 `
 
-const Button = styled.div`
-  font-family: "roobert_bold", sans-serif;
-  width: 100%;
-  display: block;
-  font-size: 16px;
-  background-color: red;
-  height: 54px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  background-color: white;
-  transition: all 0.2s ease;
-
-  box-shadow: 0px 12px 25px -10px rgba(18, 20, 39, 0.4);
-
-  :hover {
-    cursor: pointer;
-    transform: translateY(-3px);
-    transition: all 0.2s ease;
-    box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
-  }
-
-  :active {
-    cursor: pointer;
-    transform: scale(0.98);
-    transition: all 0.2s ease;
-    box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
-  }
-`
-
 const Flock = () => {
   const [context, setContext] = useContext(Context)
 
   const [state, setState] = useState({
-    loadedHighPriest: { projects: [], avatar: "andrew.png" },
+    loadedHighPriest: { projects: [], avatar: "andrew.png", firstName: "" },
     hatID: 72,
     totalDAI: 0,
-    isFollower: true,
+    isFollower: false,
     sortedFollowers: [],
   })
 
@@ -355,6 +296,7 @@ const Flock = () => {
       </FollowersEmpty>
     )
   }
+
   return (
     <div>
       <Grid>
@@ -390,14 +332,11 @@ const Flock = () => {
         </LeftSide>
 
         <RightSide>
-          <DappyWidget>
-            <img src={hat} />
-            <h3>Join Kevin's flock</h3>
-            <p>
-              Support Kevin’s selected causes with interest your DAI generates.
-            </p>
-            <Button>Activate 40 DAI to Enter</Button>
-          </DappyWidget>
+          <DappyModule
+            firstName={state.loadedHighPriest.firstName}
+            isFollower={state.isFollower}
+            hatID={state.hatID}
+          />
         </RightSide>
       </Grid>
       <BackgroundColor></BackgroundColor>
