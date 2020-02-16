@@ -51,8 +51,7 @@ const Grid = styled.div`
 const LeftSide = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
-  margin-right: 5%;
+  width: 65%;
 
   h2 {
     font-size: 56px;

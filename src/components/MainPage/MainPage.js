@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
-import { priestList } from "../../data"
+import { priestList, projectList } from "../../data"
 import "../fonts.css"
 const API_URL = "https://api.rdai.money"
 import axios from "axios"
@@ -48,6 +48,45 @@ const Container = styled.section`
 
 const StarterContainer = styled.div`
   min-height: 367px;
+`
+const Tabs = styled.div`
+  width: 100%;
+  max-width: 980px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between
+  font-weight: 800px;
+  color: white;
+  h3 {
+    margin-top:0;
+    margin-bottom: 8px;
+  }
+  h5 {
+    margin-bottom: 10px;
+  }
+`
+
+const RightTab = styled.div`
+  margin-left: auto;
+  margin-bottom: 15px;
+  padding-bottom: 0px;
+  cursor: pointer;
+  ${({ active }) =>
+    active &&
+    `
+    border-bottom: 2px solid yellow;
+  `}
+`
+const LeftTab = styled.div`
+  margin-right: auto;
+  margin-bottom: 15px;
+  padding-bottom: 0px;
+  cursor: pointer;
+  ${({ active }) =>
+    active &&
+    `
+    border-bottom: 2px solid yellow;
+  `}
 `
 
 const CardContainer = styled.div`
@@ -98,6 +137,7 @@ const CardTitle = styled.div`
   line-height: 1.3;
   font-family: "roobert_medium", sans-serif;
   text-align: left;
+  margin: 14px 0 0 0;
 `
 
 const SmallCardTitle = styled.div`
@@ -116,13 +156,12 @@ const CardDetails = styled.div`
 `
 
 const CardDetail = styled.div`
-  padding-right: 30px;
-
+  padding: 12px 0px;
   h3 {
     font-family: "roobert_medium", sans-serif;
     font-size: 16px;
     opacity: 1;
-    margin-bottom: 0;
+    margin-bottom: 3px;
     text-align: left;
   }
 
@@ -134,9 +173,30 @@ const CardDetail = styled.div`
     text-align: left;
   }
 `
+const StatList = styled.div`
+  padding: 8px 0px;
+  margin-top: 2px;
+`
+const LogoList = styled.ul`
+  list-style: none;
+  text-align: left;
+  font-size: 0.8em;
+  margin-left: 0;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  line-height: 40px;
+  vertical-align: middle;
+
+  img {
+    width: 38px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+`
 
 const SmallCardDetail = styled.div`
   padding-right: 15px;
+  font-family: "roobert_medium", sans-serif !important;
 
   &:last-child {
     padding-right: 0;
@@ -176,6 +236,19 @@ const SmallAvatar = styled.div`
   background-size: cover;
 `
 
+const ProjectList = styled.div`
+  font-size: 0.7em;
+  text-align: left;
+  padding: 1.8em 0;
+`
+
+const TextLink = styled(Link)`
+  text-decoration: none;
+  color: #ad90ff;
+  font-weight: 800;
+  font-size: 0.8em;
+  text-align: left;
+`
 const Button = styled(Link)`
   font-family: "roobert_bold", sans-serif;
   width: 100%;
@@ -222,6 +295,8 @@ const MainPage = () => {
   const [state, setState] = useState({
     topPriests: [],
     lowerPriests: [],
+    localPriestList: [],
+    isLeaderboard: false,
   })
 
   const loadDetails = async () => {
@@ -238,7 +313,7 @@ const MainPage = () => {
           let followerCount = 0
           if (typeof data !== "undefined") {
             totalDAI = data.accounts.reduce((a, b) => a + Number(b.balance), 0)
-            followerCount = data.accounts.reduce((a, b) => a++, 0)
+            followerCount = data.accounts.reduce(a => a + 1, 0)
           }
           localPriestList.find(item => item.hatID === hatID).totalDAI = totalDAI
           localPriestList.find(
@@ -262,6 +337,7 @@ const MainPage = () => {
 
         setState({
           ...state,
+          localPriestList,
           topPriests,
           lowerPriests,
         })
@@ -279,6 +355,101 @@ const MainPage = () => {
     }
   }, [])
 
+  function setLeaderboard(value) {
+    console.log(state.localPriestList)
+    const { localPriestList } = state
+    if (value) {
+      localPriestList.sort(
+        (a, b) => b.totalDAI + b.followerCount - a.totalDAI - a.followerCount
+      )
+    } else {
+      localPriestList.sort((a, b) => a.hatID - b.hatID)
+    }
+    console.log(localPriestList)
+    const topPriests = localPriestList.slice(0, 3)
+
+    console.log("topPriests: ", topPriests)
+    topPriests[0].backgroundColor =
+      "linear-gradient(198.2deg, #FFD765 1.54%, #F7C444 89.85%)"
+    topPriests[1].backgroundColor =
+      "linear-gradient(198.2deg, #E65676 1.54%, #DB4967 89.85%)"
+    topPriests[2].backgroundColor =
+      "linear-gradient(198.2deg, #7E58F5 1.54%, #6A36F4 89.85%)"
+
+    const lowerPriests = localPriestList.slice(3, 9)
+
+    setState({
+      ...state,
+      topPriests,
+      lowerPriests,
+      isLeaderboard: value,
+    })
+  }
+
+  const CardDetailsView = ({ item }) => {
+    console.log(" Item in CardDetailsView is: ", item)
+    if (state.isLeaderboard) {
+      return (
+        <StatList>
+          <CardDetail>
+            <h4>Followers</h4>
+            <h3> {item.followerCount} </h3>
+          </CardDetail>
+          <CardDetail>
+            <h4>Active DAI</h4>
+            <h3>{item.totalDAI.toFixed(2)} </h3>
+          </CardDetail>
+        </StatList>
+      )
+    }
+    const { projects } = item
+    console.log("projectList: ", projectList)
+    console.log("projects: ", projects)
+    console.log("projectList[item[0]]", projectList[projects[0]])
+    return (
+      <LogoList>
+        <li>
+          <img src={require(`../../images/logos/${projects[0]}.png`)} />{" "}
+          {projectList[projects[0]].name}{" "}
+        </li>
+        <li>
+          <img src={require(`../../images/logos/${projects[1]}.png`)} />{" "}
+          {projectList[projects[1]].name}{" "}
+        </li>
+        <li>
+          <img src={require(`../../images/logos/${projects[2]}.png`)} />{" "}
+          {projectList[projects[2]].name}{" "}
+        </li>
+      </LogoList>
+    )
+  }
+  const SmallCardDetailsView = ({ item }) => {
+    if (state.isLeaderboard) {
+      return (
+        <CardDetails>
+          <SmallCardDetail>
+            <h4>Followers</h4>
+            <h3> {item.followerCount} </h3>
+          </SmallCardDetail>
+          <SmallCardDetail>
+            <h4>Active DAI</h4>
+            <h3>{item.totalDAI.toFixed(2)} </h3>
+          </SmallCardDetail>
+        </CardDetails>
+      )
+    }
+    const { projects } = item
+    return (
+      <ProjectList>
+        <span>
+          {projectList[projects[0]].name} {"  "}
+          {projectList[projects[1]].name}
+          {"  "}
+          {projectList[projects[2]].name}
+        </span>
+      </ProjectList>
+    )
+  }
   const cardMap = state.topPriests.map(item => {
     return (
       <Card backgroundColor={item.backgroundColor}>
@@ -289,16 +460,7 @@ const MainPage = () => {
             }}
           />
           <CardTitle>{item.name}</CardTitle>
-          <CardDetails>
-            <CardDetail>
-              <h4>Followers</h4>
-              <h3> {item.followerCount} </h3>
-            </CardDetail>
-            <CardDetail>
-              <h4>Active DAI</h4>
-              <h3>{item.totalDAI} </h3>
-            </CardDetail>
-          </CardDetails>
+          <CardDetailsView item={item}></CardDetailsView>
         </CardInfo>
         <Button to={`/flock/?hatID=${item.hatID}`}>Join the flock</Button>
       </Card>
@@ -315,16 +477,8 @@ const MainPage = () => {
             }}
           />
           <SmallCardTitle>{item.name}</SmallCardTitle>
-          <CardDetails>
-            <SmallCardDetail>
-              <h4>Followers</h4>
-              <h3> {item.followerCount} </h3>
-            </SmallCardDetail>
-            <SmallCardDetail>
-              <h4>Active DAI</h4>
-              <h3>{item.totalDAI} </h3>
-            </SmallCardDetail>
-          </CardDetails>
+          <SmallCardDetailsView item={item}></SmallCardDetailsView>
+          <TextLink to={`/flock/?hatID=${item.hatID}`}>Join the flock</TextLink>
         </CardInfo>
       </SmallCard>
     )
@@ -340,6 +494,22 @@ const MainPage = () => {
         Stop donating at any time.
       </P>
       <StarterContainer>
+        <Tabs>
+          <LeftTab
+            active={!state.isLeaderboard}
+            onClick={() => setLeaderboard(false)}
+          >
+            <h5>High Priests</h5>
+            <h3>Profiles</h3>
+          </LeftTab>
+          <RightTab
+            active={state.isLeaderboard}
+            onClick={() => setLeaderboard(true)}
+          >
+            <h5>Largest Coffers</h5>
+            <h3>Leaderboard</h3>
+          </RightTab>
+        </Tabs>
         <CardContainer>{cardMap}</CardContainer>
         <SmallCardContainer>{smallCardMap}</SmallCardContainer>
       </StarterContainer>
