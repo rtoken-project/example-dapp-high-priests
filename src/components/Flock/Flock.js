@@ -52,8 +52,7 @@ const Grid = styled.div`
 const LeftSide = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
-  margin-right: 5%;
+  width: 65%;
 
   h2 {
     font-size: 56px;
@@ -300,7 +299,7 @@ const Flock = () => {
     return (
       <LI>
         <h4>{item.id}</h4>
-        <p>{item.balance}</p>
+        <p>{item.balance} DAI</p>
       </LI>
     )
   })
