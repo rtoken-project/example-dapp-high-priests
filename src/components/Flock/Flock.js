@@ -85,6 +85,7 @@ const DappyWidget = styled.div`
   background: linear-gradient(198.2deg, #ffd765 1.54%, #f7c444 89.85%);
   border-radius: 10px;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   text-align: center;
   padding: 10px;
@@ -154,6 +155,21 @@ const H5 = styled.h5`
   margin-top: 60px;
 `
 
+const H2 = styled.h2`
+  font-family: "roobert_semibold", sans-serif;
+  font-size: 24px !important;
+  color: white;
+  margin-top: 32px;
+`
+
+
+const LI = styled.li`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+`
+
 const Grantee = styled.div`
   display: flex;
   padding: 30px;
@@ -189,7 +205,8 @@ const AquiredDai = styled.div`
   }
 `
 
-const Followers = styled.div`
+
+const FollowersEmpty = styled.div`
   margin-top: 80px;
   border-radius: 12px;
   width: 100%;
@@ -201,6 +218,22 @@ const Followers = styled.div`
   background-color: #0e0f20;
   align-items: center;
   justify-content: center;
+  margin-bottom: 80px;
+
+  p {
+    margin-bottom: 0;
+  }
+`
+
+const Followers = styled.div`
+  margin-top: 40px;
+  border-radius: 12px;
+  width: 100%;
+  font-family: "roobert_medium", sans-serif;
+  font-size: 18px;
+  color: white;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 80px;
 
   p {
@@ -296,27 +329,35 @@ const Flock = () => {
 
   const granteeList = state.loadedHighPriest.projects.map(id => {
     return (
-      <Grantee>
-        <h4>{projectList.find(item => item.id === id).name}</h4>
-        <AquiredDai>
-          <p>Coffer allocation</p>
-          <h5>{((state.totalDAI * 0.95) / 3).toFixed(2)} DAI</h5>
-        </AquiredDai>
-      </Grantee>
+      <div>
+        <Grantee>
+          <h4>{projectList.find(item => item.id === id).name}</h4>
+          <AquiredDai>
+            <p>Estimated funding</p>
+            <h5>{((state.totalDAI * compoundRate)/3).toFixed(2)} DAI per year</h5>
+          </AquiredDai>
+        </Grantee>
+      </div>
+     
     )
   })
   const sortedFollowerList = state.sortedFollowers.map(item => {
     return (
-      <li>
-        {item.balance} + {item.id} + Resolve to ENS
-      </li>
+      <LI>
+        <h4>{item.id}</h4><p>{item.balance}</p>
+      </LI>
     )
   })
   const FollowersList = () => {
     if (state.isFollower) {
       return <ol>{sortedFollowerList}</ol>
     }
-    return <p>Join the flock to see who's following</p>
+    return (
+      <FollowersEmpty>
+        <p>Join the flock to see who's following</p>
+      </FollowersEmpty>
+    )
+    
   }
   return (
     <div>
@@ -333,7 +374,7 @@ const Flock = () => {
 
             <div>
               <Stats>
-                <h5>DAI coffer</h5>
+                <h5>Designating</h5>
                 <ActiveDAI>
                   <h3>{state.totalDAI.toFixed(0)} DAI</h3>
                   <h4>
@@ -344,8 +385,12 @@ const Flock = () => {
             </div>
           </Profile>
 
-          <Grantees>{granteeList}</Grantees>
+          <H2>Recipients</H2>
+          <Grantees>
+            {granteeList}
+          </Grantees>
           <Followers>
+            <H2>Followers</H2>
             <FollowersList></FollowersList>
           </Followers>
         </LeftSide>
