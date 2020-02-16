@@ -93,7 +93,7 @@ const CardTitle = styled.div`
   font-size: 32px;
   font-weight: 600;
   line-height: 1.3;
-  max-width: 50%;
+  max-width: 90%;
   font-family: "roobert_medium", sans-serif;
   text-align: left;
 `
@@ -204,7 +204,12 @@ const Button = styled.div`
     box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
   }
 `
+/*
+backgroundColor: "linear-gradient(198.2deg, #FFD765 1.54%, #F7C444 89.85%)",
+backgroundColor: "linear-gradient(198.2deg, #E65676 1.54%, #DB4967 89.85%)",
+backgroundColor: "linear-gradient(198.2deg, #7E58F5 1.54%, #6A36F4 89.85%)",
 
+*/
 const CardInfo = styled.div`
   padding: 20px;
   display: flex;
@@ -235,7 +240,7 @@ const cardMap = priestList.map(item => {
           </CardDetail>
         </CardDetails>
       </CardInfo>
-      <Button>Join the club</Button>
+      <Button>Join the flock</Button>
     </Card>
   )
 })
