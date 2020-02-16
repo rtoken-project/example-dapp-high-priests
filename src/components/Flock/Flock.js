@@ -329,8 +329,7 @@ const Flock = () => {
     }
   }, [])
 
-  if (true) {
-    // if (state.sortedFollowers.length === 0) {
+  if (state.sortedFollowers.length === 0) {
     return (
       <LoaderContainer>
         <p>Please Unlock Your Wallet</p>

@@ -4,6 +4,7 @@
   "description": "Mystical social donation app.",
   "version": "0.1.0",
   "dependencies": {
+    "3box": "^1.17.0",
     "@status-im/subspace": "^1.1.0",
     "aframe": "^1.0.0",
     "aframe-alongpath-component": "^1.0.5",
