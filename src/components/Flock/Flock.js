@@ -7,6 +7,7 @@ import { Context } from "../context"
 import { priestList, projectList } from "../../data"
 import Avatar from "../common/Avatar"
 import axios from "axios"
+const Box = require("3box")
 const API_URL = "https://api.rdai.money"
 import hat from "../../images/hat.svg"
 import ethers from "ethers"
@@ -238,6 +239,15 @@ const Flock = () => {
         const sortedFollowers = data.accounts.sort((a, b) => {
           return b.balance - a.balance
         })
+        const opts = { metadata: true, profileServer: true }
+        for (let index = 0; index < sortedFollowers.length; index++) {
+          const profile = await Box.getProfile(sortedFollowers[index].id)
+          const { image, name } = profile
+          if (name) sortedFollowers[index].name = name
+          if (image) {
+            sortedFollowers[index].image = image[0].contentUrl["/"]
+          }
+        }
         let isFollower = false
         let amountActive = 0
         const {
@@ -290,7 +300,7 @@ const Flock = () => {
 
   const granteeList = state.loadedHighPriest.projects.map(id => {
     return (
-      <Grantee key={id.name}>
+      <Grantee key={id}>
         <h4>{projectList.find(item => item.id === id).name}</h4>
         <AquiredDai>
           <p>Coffers allocating</p>
@@ -303,9 +313,11 @@ const Flock = () => {
     )
   })
   const sortedFollowerList = state.sortedFollowers.map(item => {
+    console.log(item.image)
     return (
       <LI key={item.id}>
-        <h4>{item.id}</h4>
+        {item.image && <img src={`https://ipfs.io/ipfs/${item.image}}`} />}
+        <h4>{item.name || item.id}</h4>
         <p>{Number(item.balance).toFixed(2)} DAI</p>
       </LI>
     )

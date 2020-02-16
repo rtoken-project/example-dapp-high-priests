@@ -122,8 +122,8 @@ export const priestList = [
   },
   {
     name: "MetaCartel",
-    firstName: "Meta",
-    lastName: "Cartel",
+    firstName: "MetaCartel",
+    lastName: "",
     avatar: "meta-cartel.png",
     bio: "el cartel de la meta",
     twitter: "meta_cartel",
