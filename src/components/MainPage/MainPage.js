@@ -116,16 +116,21 @@ const Card = styled.div`
   justify-content: space-between;
   min-height: 400px;
   background: ${props => props.backgroundColor};
-  transition: 2.5s;
+  transition: all 0.3s cubic-bezier(.64,.22,.16,.78);
+  text-shadow: 0px 2px 2px rgba(18, 20, 39, 0.16);
+
+
 
   &:nth-of-type(1) {
-    text-shadow: 1px 0px #ccc;
+    transition: all 0.3s ease;
     margin: ${({ isLeaderboard }) => {
       if (!isLeaderboard) return "40px 10px"
       return "60px 10px 10px 10px"
     }};
   }
   &:nth-of-type(2) {
+    transition: all 0.3s ease;
+
     margin: ${({ isLeaderboard }) => {
       if (!isLeaderboard) return "40px 10px"
       return "10px 10px 60px 10px"
@@ -202,6 +207,20 @@ const LogoList = styled.ul`
   line-height: 40px;
   vertical-align: middle;
 
+  h5 {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 12px;
+    margin-top: 16px;
+    text-shadow: none;
+  }
+
+  li {
+    font-family: "roobert_medium", sans-serif !important;
+
+  }
+
+
   img {
     width: 38px;
     margin-right: 8px;
@@ -245,12 +264,12 @@ const Avatar = styled.div`
   background-size: cover;
 `
 const Position = styled.div`
-  font-size: 3.2em;
+  font-size: 32px;
   margin-top: 20px;
   margin-right: 5px;
   color: white;
   font-family: "roobert_medium", sans-serif;
-  transition: 2s;
+  transition: all 0.3s ease;
   opacity: ${({ show }) => (!show ? 0 : 1)};
   position: relative;
 
@@ -289,6 +308,16 @@ const ProjectList = styled.div`
   font-size: 0.7em;
   text-align: left;
   padding: 1.8em 0;
+  font-family: "roobert_medium", sans-serif;
+
+  h5 {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 12px;
+    margin-top: 0px;
+    text-shadow: none;
+  }
+
 `
 
 const TextLink = styled(Link)`
@@ -450,20 +479,25 @@ const MainPage = () => {
     }
     const { projects } = item
     return (
-      <LogoList>
-        <li>
-          <img src={require(`../../images/logos/${projects[0]}.png`)} />{" "}
-          {projectList[projects[0]].name}{" "}
-        </li>
-        <li>
-          <img src={require(`../../images/logos/${projects[1]}.png`)} />{" "}
-          {projectList[projects[1]].name}{" "}
-        </li>
-        <li>
-          <img src={require(`../../images/logos/${projects[2]}.png`)} />{" "}
-          {projectList[projects[2]].name}{" "}
-        </li>
-      </LogoList>
+      <div>
+        <LogoList>
+          <h5>Evangelizing for</h5>
+          <li>
+            <img src={require(`../../images/logos/${projects[0]}.png`)} />{" "}
+            {projectList[projects[0]].name}{" "}
+          </li>
+          <li>
+            <img src={require(`../../images/logos/${projects[1]}.png`)} />{" "}
+            {projectList[projects[1]].name}{" "}
+          </li>
+          <li>
+            <img src={require(`../../images/logos/${projects[2]}.png`)} />{" "}
+            {projectList[projects[2]].name}{" "}
+          </li>
+        </LogoList>
+
+      </div>
+     
     )
   }
   const SmallCardDetailsView = ({ item }) => {
@@ -484,6 +518,7 @@ const MainPage = () => {
     const { projects } = item
     return (
       <ProjectList>
+        <h5>Evangelizing for</h5>
         <span>
           {projectList[projects[0]].name}
           <br />
