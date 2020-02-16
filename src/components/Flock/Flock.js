@@ -155,6 +155,14 @@ const Grantee = styled.div`
     font-size: 24px;
     color: white;
   }
+  img {
+    position: relative;
+    right: 25px;
+    top: 25px;
+    z-index: 999;
+    width: 50px;
+    height: 50px;
+  }
 `
 
 const AquiredDai = styled.div`

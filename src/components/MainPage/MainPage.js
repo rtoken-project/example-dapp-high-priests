@@ -105,7 +105,7 @@ const SmallCardContainer = styled.div`
 `
 
 const Card = styled.div`
-  margin: 10px;
+  margin: 30px 10px;
   width: 310px;
   background: white;
   border-radius: 1em;
