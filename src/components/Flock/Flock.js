@@ -383,12 +383,12 @@ const Flock = () => {
         </LeftSide>
 
         <RightSide>
-          {/* <DappyModule
+          <DappyModule
             firstName={state.loadedHighPriest.firstName}
             isFollower={state.isFollower}
             hatID={state.hatID}
             amountActive={state.amountActive}
-          /> */}
+          />
         </RightSide>
       </Grid>
       <BackgroundColor></BackgroundColor>
