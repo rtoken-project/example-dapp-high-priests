@@ -246,6 +246,8 @@ const Flock = () => {
     loadedHighPriest: { projects: [], avatar: "andrew.png" },
     hatID: 72,
     totalDAI: 0,
+    isFollower: true,
+    sortedFollowers: [],
   })
 
   const compoundRate = 0.075
@@ -262,17 +264,20 @@ const Flock = () => {
         // load stuff
         const url = `${API_URL}/v1/allUsersWithHat/?hatID=${hatID}`
         console.log(url)
-        const accounts = (await axios.get(url)).data.accounts
+        const { data } = await axios.get(url)
         let totalDAI = 0
-        if (typeof accounts !== "undefined") {
-          accounts.reduce((a, b) => a + Number(b.balance), 0)
+        if (typeof data !== "undefined") {
+          totalDAI = data.accounts.reduce((a, b) => a + Number(b.balance), 0)
         }
-        console.log(totalDAI)
+        const sortedFollowers = data.accounts.sort((a, b) => {
+          return b.balance - a.balance
+        })
+
         setState({
           ...state,
           hatID,
           totalDAI,
-          yearlyDAI,
+          sortedFollowers,
           loadedHighPriest: priest,
         })
       }
@@ -295,12 +300,24 @@ const Flock = () => {
         <h4>{projectList.find(item => item.id === id).name}</h4>
         <AquiredDai>
           <p>Coffer allocation</p>
-          <h5>{(state.totalDAI * 0.95) / 3}</h5>
+          <h5>{((state.totalDAI * 0.95) / 3).toFixed(2)} DAI</h5>
         </AquiredDai>
       </Grantee>
     )
   })
-
+  const sortedFollowerList = state.sortedFollowers.map(item => {
+    return (
+      <li>
+        {item.balance} + {item.id} + Resolve to ENS
+      </li>
+    )
+  })
+  const FollowersList = () => {
+    if (state.isFollower) {
+      return <ol>{sortedFollowerList}</ol>
+    }
+    return <p>Join the flock to see who's following</p>
+  }
   return (
     <div>
       <Grid>
@@ -318,19 +335,18 @@ const Flock = () => {
               <Stats>
                 <h5>DAI coffer</h5>
                 <ActiveDAI>
-                  <h3>{state.totalDAI} DAI</h3>
-                  <h4>/ {state.totalDAI * compoundRate} DAI per year</h4>
+                  <h3>{state.totalDAI.toFixed(0)} DAI</h3>
+                  <h4>
+                    {(state.totalDAI * compoundRate).toFixed(2)} DAI per year
+                  </h4>
                 </ActiveDAI>
               </Stats>
             </div>
           </Profile>
 
-          <H5>Supporting three projects</H5>
-
           <Grantees>{granteeList}</Grantees>
-
           <Followers>
-            <p>Join the flock to see who's following</p>
+            <FollowersList></FollowersList>
           </Followers>
         </LeftSide>
 
