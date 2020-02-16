@@ -10,8 +10,8 @@ import axios from "axios"
 const API_URL = "https://api.rdai.money"
 import hat from "../../images/hat.svg"
 import ethers from "ethers"
+import DappyModule from "./DappyModule"
 import Web3Utils from "./Web3/Web3Utils"
-import Loadable from "react-loadable"
 
 const Loading = props => {
   if (props.error) {
@@ -329,34 +329,6 @@ const Flock = () => {
     }
   }, [])
 
-  const Loading = props => {
-    if (props.error) {
-      return (
-        <div>
-          Error! <button onClick={() => location.reload()}>Retry</button>
-        </div>
-      )
-    } else if (props.pastDelay) {
-      return <div></div>
-    } else if (props.timedOut) {
-      return (
-        <div>
-          Taking a long time...{" "}
-          <button onClick={() => location.reload()}>Retry</button>
-        </div>
-      )
-    } else {
-      return null
-    }
-  }
-
-  const LoadableDappyModule = Loadable({
-    loader: () => import("./DappyModule"),
-    loading: Loading,
-    delay: 300, // 0.3 seconds
-    timeout: 10000, // 10 seconds
-  })
-
   return (
     <div>
       <Grid>
@@ -392,7 +364,7 @@ const Flock = () => {
         </LeftSide>
 
         <RightSide>
-          <LoadableDappyModule
+          <DappyModule
             firstName={state.loadedHighPriest.firstName}
             isFollower={state.isFollower}
             hatID={state.hatID}
