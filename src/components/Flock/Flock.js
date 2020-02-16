@@ -234,7 +234,6 @@ const Flock = () => {
         })
         // load stuff
         const url = `${API_URL}/v1/allUsersWithHat/?hatID=${hatID}`
-        console.log(url)
         const { data } = await axios.get(url)
         let totalDAI = 0
         if (typeof data !== "undefined") {
@@ -243,7 +242,9 @@ const Flock = () => {
         const sortedFollowers = data.accounts.sort((a, b) => {
           return b.balance - a.balance
         })
-        if (web3Utils.isBrowser()) {
+        const web3Utils = new Web3Utils()
+
+        if (web3Utils.isWeb3EnabledBrowser()) {
           const {
             hasWallet,
             walletAddress,
@@ -260,6 +261,11 @@ const Flock = () => {
             // })
             return
           }
+          const { data } = await axios.get(
+            `${API_URL}/v1/getHatIDByAddress?owner=${walletAddress}`
+          )
+          const { hatID: userHatID } = data
+          console.log(userHatID)
         }
         setState({
           ...state,
@@ -313,8 +319,6 @@ const Flock = () => {
       </FollowersEmpty>
     )
   }
-
-  const web3Utils = new Web3Utils()
 
   useEffect(() => {
     try {

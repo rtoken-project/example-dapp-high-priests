@@ -10,7 +10,6 @@ const Round = styled.div`
 `
 
 const Avatar = ({ image }) => {
-  console.log(image)
   if (image === undefined) return <></>
   return (
     <Round
