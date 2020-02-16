@@ -148,7 +148,7 @@ const Grantee = styled.div`
   width: 225px;
   background-color: #1f2240;
   border-radius: 12px;
-  height: 175px;
+  height: 200px;
 
   h4 {
     font-family: "roobert_medium", sans-serif;
@@ -300,7 +300,6 @@ const Flock = () => {
   const granteeList = state.loadedHighPriest.projects.map(id => {
     return (
       <Grantee>
-        <img src={require(`../../images/logos/${id}.png`)} />{" "}
         <h4>{projectList.find(item => item.id === id).name}</h4>
         <AquiredDai>
           <p>Coffer allocation</p>
@@ -315,7 +314,7 @@ const Flock = () => {
     return (
       <LI key={item.id}>
         <h4>{item.id}</h4>
-        <p>{item.balance.toFixed(2)} DAI</p>
+        <p>{Number(item.balance).toFixed(2)} DAI</p>
       </LI>
     )
   })
@@ -358,13 +357,13 @@ const Flock = () => {
       return null
     }
   }
-
+  /*
   const LoadableDappyModule = Loadable({
     loader: () => import("./DappyModule"),
     loading: Loading,
     delay: 300, // 0.3 seconds
     timeout: 10000, // 10 seconds
-  })
+  })*/
 
   return (
     <div>
@@ -400,13 +399,7 @@ const Flock = () => {
           </Followers>
         </LeftSide>
 
-        <RightSide>
-          <LoadableDappyModule
-            firstName={state.loadedHighPriest.firstName}
-            isFollower={state.isFollower}
-            hatID={state.hatID}
-          />
-        </RightSide>
+        <RightSide></RightSide>
       </Grid>
       <BackgroundColor></BackgroundColor>
     </div>
