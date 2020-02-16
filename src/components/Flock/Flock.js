@@ -325,7 +325,7 @@ const Flock = () => {
     }
   }, [])
 
-  if (state.compoundRate === 0)
+  if (state.sortedFollowers.length === 0)
     return (
       <LoaderContainer>
         <Loader />
