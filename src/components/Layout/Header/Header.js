@@ -2,6 +2,9 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
 import Web3Utils from "../../Flock/Web3/Web3Utils"
+import axios from "axios"
+const API_URL = "https://api.rdai.money"
+
 import Logo from "../../../images/logo.svg"
 
 const StyledButton = styled(Link)`
@@ -123,7 +126,7 @@ const Header = () => {
     }
   }
   const ActionButton = () => {
-    if (state.hatID !== null)
+    if (!state.hatID)
       return <StyledButton onClick={loadDetails}>Load Wallet</StyledButton>
     return (
       <StyledButton to={`/flock?hatID=${state.hatID}`}>Your flock</StyledButton>
