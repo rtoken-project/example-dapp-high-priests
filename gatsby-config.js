@@ -39,7 +39,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-matomo",
       options: {
-        siteId: 1,
+        siteId: 4,
         matomoUrl: "https://matomo.patrickgallagher.dev",
         siteUrl: "https://highpriests.rdai.money",
       },

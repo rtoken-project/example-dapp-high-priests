@@ -12,9 +12,11 @@ import axios from "axios"
 const API_URL = "https://api.rdai.money"
 import hat from "../../images/hat.svg"
 import ethers from "ethers"
+import DappyModule from "./DappyModule"
 
 const Loading = props => {
   if (props.error) {
+    console.log(props.error)
     return (
       <div>
         Error! <button onClick={() => location.reload()}>Retry</button>
@@ -78,35 +80,6 @@ const Profile = styled.div`
     flex-direction: row;
   }
 `
-const DappyWidget = styled.div`
-  width: 310px;
-  margin-left: auto;
-  height: 400px;
-  background: linear-gradient(198.2deg, #ffd765 1.54%, #f7c444 89.85%);
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  text-align: center;
-  padding: 10px;
-
-  img {
-    margin-top: 20px;
-  }
-
-  h3 {
-    margin-top: 40px;
-    font-family: "roobert_medium", sans-serif;
-    font-size: 32px;
-    color: white;
-  }
-
-  p {
-    font-family: "roobert_medium", sans-serif;
-    font-size: 18px;
-    color: black;
-  }
-`
 
 const ActiveDAI = styled.div`
   color: white;
@@ -162,12 +135,11 @@ const H2 = styled.h2`
   margin-top: 32px;
 `
 
-
 const LI = styled.li`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `
 
 const Grantee = styled.div`
@@ -204,7 +176,6 @@ const AquiredDai = styled.div`
     margin-bottom: 0;
   }
 `
-
 
 const FollowersEmpty = styled.div`
   margin-top: 80px;
@@ -279,7 +250,7 @@ const Flock = () => {
     loadedHighPriest: { projects: [], avatar: "andrew.png" },
     hatID: 72,
     totalDAI: 0,
-    isFollower: true,
+    isFollower: false,
     sortedFollowers: [],
   })
 
@@ -334,17 +305,19 @@ const Flock = () => {
           <h4>{projectList.find(item => item.id === id).name}</h4>
           <AquiredDai>
             <p>Estimated funding</p>
-            <h5>{((state.totalDAI * compoundRate)/3).toFixed(2)} DAI per year</h5>
+            <h5>
+              {((state.totalDAI * compoundRate) / 3).toFixed(2)} DAI per year
+            </h5>
           </AquiredDai>
         </Grantee>
       </div>
-     
     )
   })
   const sortedFollowerList = state.sortedFollowers.map(item => {
     return (
       <LI>
-        <h4>{item.id}</h4><p>{item.balance}</p>
+        <h4>{item.id}</h4>
+        <p>{item.balance}</p>
       </LI>
     )
   })
@@ -357,8 +330,8 @@ const Flock = () => {
         <p>Join the flock to see who's following</p>
       </FollowersEmpty>
     )
-    
   }
+
   return (
     <div>
       <Grid>
@@ -386,9 +359,7 @@ const Flock = () => {
           </Profile>
 
           <H2>Recipients</H2>
-          <Grantees>
-            {granteeList}
-          </Grantees>
+          <Grantees>{granteeList}</Grantees>
           <Followers>
             <H2>Followers</H2>
             <FollowersList></FollowersList>
@@ -396,14 +367,7 @@ const Flock = () => {
         </LeftSide>
 
         <RightSide>
-          <DappyWidget>
-            <img src={hat} />
-            <h3>Join Kevin's flock</h3>
-            <p>
-              Support Kevin’s selected causes with interest your DAI generates.
-            </p>
-            <Button>Activate 40 DAI to Enter</Button>
-          </DappyWidget>
+          <DappyModule isFollower={state.isFollower} />
         </RightSide>
       </Grid>
       <BackgroundColor></BackgroundColor>
