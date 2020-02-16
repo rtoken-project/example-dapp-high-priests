@@ -3,12 +3,15 @@ import styled from "styled-components"
 import Tribute from "tribute-utils"
 import Loadable from "react-loadable"
 import RTokenAnalytics from "rtoken-analytics"
-var CryptoJS = require("crypto-js")
+let CryptoJS = require("crypto-js")
 import { navigate } from "gatsby"
 import { Context } from "../context"
 import { priestList, projectList } from "../../data"
-
+import Avatar from "../common/Avatar"
+import axios from "axios"
+const API_URL = "https://api.rdai.money"
 import hat from "../../images/hat.svg"
+import ethers from "ethers"
 
 const Loading = props => {
   if (props.error) {
@@ -75,16 +78,6 @@ const Profile = styled.div`
     flex-direction: row;
   }
 `
-
-const Avatar = styled.div`
-  width: 100px;
-  margin-right: 20px;
-  height: 100px;
-  border-radius: 100%;
-  background-size: cover;
-  background-color: red;
-`
-
 const DappyWidget = styled.div`
   width: 310px;
   margin-left: auto;
@@ -175,7 +168,6 @@ const Grantee = styled.div`
     font-family: "roobert_medium", sans-serif;
     font-size: 24px;
     color: white;
-    max-width: 60%;
   }
 `
 
@@ -250,31 +242,43 @@ const Button = styled.div`
 const Flock = () => {
   const [context, setContext] = useContext(Context)
 
-  const [state, setState] = useState({})
+  const [state, setState] = useState({
+    loadedHighPriest: { projects: [], avatar: "andrew.png" },
+    hatID: 72,
+    totalDAI: 0,
+  })
 
+  const compoundRate = 0.075
   const loadDetails = async () => {
     // check URL for priest hat ID
-
-    if (window.location.href.indexOf(hatID) > -1) {
-      setState({ hatID: getUrlVars()[hatID] })
-    } else setState({ hatID: 71 })
-
-    setState({
-      loadedHighPriest: PriestList.find(
-        element => element.hatID === state.hatID
-      ),
-    })
-
-    // load stuff
-    fetch(/*URL Of API*/)
-      .then(response => {
-        return response.json()
-      })
-      .then(myJson => {
-        // here I have to get the whole amount of DAI "under management"
-        setState({ ...state, totalDAI: 1000 })
-        console.log(myJson)
-      })
+    try {
+      if (typeof window !== "undefined") {
+        const queryString = window.location.search
+        const urlParams = new URLSearchParams(queryString)
+        const hatID = urlParams.get("hatID")
+        const priest = priestList.find(element => {
+          return element.hatID.toString() === hatID.toString()
+        })
+        // load stuff
+        const url = `${API_URL}/v1/allUsersWithHat/?hatID=${hatID}`
+        console.log(url)
+        const accounts = (await axios.get(url)).data.accounts
+        let totalDAI = 0
+        if (typeof accounts !== "undefined") {
+          accounts.reduce((a, b) => a + Number(b.balance), 0)
+        }
+        console.log(totalDAI)
+        setState({
+          ...state,
+          hatID,
+          totalDAI,
+          yearlyDAI,
+          loadedHighPriest: priest,
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   useEffect(() => {
@@ -288,7 +292,7 @@ const Flock = () => {
   const granteeList = state.loadedHighPriest.projects.map(id => {
     return (
       <Grantee>
-        <h4>{ProjectList.find(item => item.id === id).name}</h4>
+        <h4>{projectList.find(item => item.id === id).name}</h4>
         <AquiredDai>
           <p>Coffer allocation</p>
           <h5>{(state.totalDAI * 0.95) / 3}</h5>
@@ -303,10 +307,10 @@ const Flock = () => {
         <LeftSide>
           <Profile>
             <div>
-              <Avatar></Avatar>
+              <Avatar image={state.loadedHighPriest.avatar} />
               <h2>
-                Kevin <br />
-                Owocki
+                {state.loadedHighPriest.firstName} <br />
+                {state.loadedHighPriest.lastName}
               </h2>
             </div>
 
@@ -314,8 +318,8 @@ const Flock = () => {
               <Stats>
                 <h5>DAI coffer</h5>
                 <ActiveDAI>
-                  <h3>$210.22</h3>
-                  <h4>/ $0.001</h4>
+                  <h3>{state.totalDAI} DAI</h3>
+                  <h4>/ {state.totalDAI * compoundRate} DAI per year</h4>
                 </ActiveDAI>
               </Stats>
             </div>
@@ -337,7 +341,7 @@ const Flock = () => {
             <p>
               Support Kevin’s selected causes with interest your DAI generates.
             </p>
-            <Button>Activate $40 DAI to Enter</Button>
+            <Button>Activate 40 DAI to Enter</Button>
           </DappyWidget>
         </RightSide>
       </Grid>

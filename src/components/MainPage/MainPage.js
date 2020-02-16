@@ -220,7 +220,7 @@ const cardMap = priestList.map(item => {
       <CardInfo>
         <Avatar
           style={{
-            backgroundImage: `url(${require("../../images/" + item.avatar)})`,
+            backgroundImage: `url(${require(`../../images/${item.avatar}`)})`,
           }}
         />
         <CardTitle>{item.name}</CardTitle>
