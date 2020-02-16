@@ -291,6 +291,7 @@ const Flock = () => {
   const granteeList = state.loadedHighPriest.projects.map(id => {
     return (
       <Grantee>
+        <img src={require(`../../images/logos/${id}.png`)} />{" "}
         <h4>{projectList.find(item => item.id === id).name}</h4>
         <AquiredDai>
           <p>Coffer allocation</p>
@@ -305,7 +306,7 @@ const Flock = () => {
     return (
       <LI>
         <h4>{item.id}</h4>
-        <p>{item.balance} DAI</p>
+        <p>{item.balance.toFixed(2)} DAI</p>
       </LI>
     )
   })

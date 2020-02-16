@@ -226,7 +226,10 @@ const Avatar = styled.div`
   border-radius: 100%;
   background-size: cover;
 `
-
+const Position = styled.div`
+  font-size: 1.8em
+  color: white;
+`
 const SmallAvatar = styled.div`
   width: 60px;
   height: 60px;
@@ -356,7 +359,6 @@ const MainPage = () => {
   }, [])
 
   function setLeaderboard(value) {
-    console.log(state.localPriestList)
     const { localPriestList } = state
     if (value) {
       localPriestList.sort(
@@ -365,10 +367,8 @@ const MainPage = () => {
     } else {
       localPriestList.sort((a, b) => a.hatID - b.hatID)
     }
-    console.log(localPriestList)
     const topPriests = localPriestList.slice(0, 3)
 
-    console.log("topPriests: ", topPriests)
     topPriests[0].backgroundColor =
       "linear-gradient(198.2deg, #FFD765 1.54%, #F7C444 89.85%)"
     topPriests[1].backgroundColor =
@@ -387,7 +387,6 @@ const MainPage = () => {
   }
 
   const CardDetailsView = ({ item }) => {
-    console.log(" Item in CardDetailsView is: ", item)
     if (state.isLeaderboard) {
       return (
         <StatList>
@@ -403,9 +402,6 @@ const MainPage = () => {
       )
     }
     const { projects } = item
-    console.log("projectList: ", projectList)
-    console.log("projects: ", projects)
-    console.log("projectList[item[0]]", projectList[projects[0]])
     return (
       <LogoList>
         <li>
@@ -450,7 +446,8 @@ const MainPage = () => {
       </ProjectList>
     )
   }
-  const cardMap = state.topPriests.map(item => {
+  const cardMap = state.topPriests.map((item, index) => {
+    console.log("index:", index)
     return (
       <Card backgroundColor={item.backgroundColor}>
         <CardInfo>
@@ -459,6 +456,7 @@ const MainPage = () => {
               backgroundImage: `url(${require(`../../images/${item.avatar}`)})`,
             }}
           />
+          <Position>#{index + 1}</Position>
           <CardTitle>{item.name}</CardTitle>
           <CardDetailsView item={item}></CardDetailsView>
         </CardInfo>
