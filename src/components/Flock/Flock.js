@@ -342,7 +342,7 @@ const Flock = () => {
     return (
       <LI>
         <h4>{item.id}</h4>
-        <p>{item.balance}</p>
+        <p>{item.balance} DAI</p>
       </LI>
     )
   })
