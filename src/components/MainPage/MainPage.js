@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
-import vitalik from '../../images/vitalik.png';
-
+import { priestList, priestListOutside } from "../../data"
 import "../fonts.css"
 
 const H1 = styled.h1`
@@ -45,8 +44,6 @@ const Container = styled.section`
   }
 `
 
-
-
 const StarterContainer = styled.div`
   min-height: 367px;
 `
@@ -65,8 +62,6 @@ const SmallCardContainer = styled.div`
   margin: 0 auto;
 `
 
-
-
 const Card = styled.div`
   margin: 1em;
   width: 310px;
@@ -78,7 +73,7 @@ const Card = styled.div`
   flex-direction: column;
   justify-content: space-between;
   min-height: 400px;
-  background: ${props => props.backgroundColor };
+  background: ${props => props.backgroundColor};
 `
 
 const SmallCard = styled.div`
@@ -91,9 +86,8 @@ const SmallCard = styled.div`
   flex-direction: column;
   justify-content: space-between;
   min-height: 300px;
-  background: #1F2240;
+  background: #1f2240;
 `
-
 
 const CardTitle = styled.div`
   font-size: 32px;
@@ -114,13 +108,12 @@ const SmallCardTitle = styled.div`
 `
 
 const CardDetails = styled.div`
-  display: flex; 
+  display: flex;
   flex-direction: row;
   margin-bottom: 20px;
 `
 
 const CardDetail = styled.div`
-
   padding-right: 30px;
 
   h3 {
@@ -130,19 +123,17 @@ const CardDetail = styled.div`
     margin-bottom: 0;
     text-align: left;
   }
-  
+
   h4 {
     font-family: "roobert_medium", sans-serif;
     font-size: 16px;
-    opacity: 0.7; 
+    opacity: 0.7;
     margin-bottom: 8px;
     text-align: left;
   }
 `
 
-
 const SmallCardDetail = styled.div`
-
   padding-right: 15px;
 
   &:last-child {
@@ -156,11 +147,11 @@ const SmallCardDetail = styled.div`
     margin-bottom: 0;
     text-align: left;
   }
-  
+
   h4 {
     font-family: "roobert_medium", sans-serif;
     font-size: 12px;
-    opacity: 0.7; 
+    opacity: 0.7;
     margin-bottom: 8px;
     text-align: left;
   }
@@ -170,7 +161,7 @@ const Avatar = styled.div`
   width: 100px;
   height: 100px;
   margin: 0;
-  border-radius:100%;
+  border-radius: 100%;
   background-size: cover;
 `
 
@@ -178,11 +169,10 @@ const SmallAvatar = styled.div`
   width: 60px;
   height: 60px;
   margin: 0;
-  border-radius:100%;
+  border-radius: 100%;
   margin-bottom: 20px;
   background-size: cover;
 `
-
 
 const Button = styled.div`
   font-family: "roobert_bold", sans-serif;
@@ -196,25 +186,23 @@ const Button = styled.div`
   align-items: center;
   border-radius: 12px;
   background-color: white;
-  transition: all 0.2s ease; 
+  transition: all 0.2s ease;
 
   box-shadow: 0px 12px 25px -10px rgba(18, 20, 39, 0.4);
 
   :hover {
     cursor: pointer;
-    transform: translateY(-3px); 
-    transition: all 0.2s ease; 
+    transform: translateY(-3px);
+    transition: all 0.2s ease;
     box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
   }
-
 
   :active {
     cursor: pointer;
-    transform: scale(0.98); 
-    transition: all 0.2s ease; 
+    transform: scale(0.98);
+    transition: all 0.2s ease;
     box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
   }
-
 `
 
 const CardInfo = styled.div`
@@ -222,84 +210,28 @@ const CardInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%; 
+  height: 100%;
   color: white;
 `
 
-const PriestList = [
-  {
-    name: "Kevin Owocki",
-    avatar: "kevin.png",
-    followers: "18",
-    activeDAI: "200.21 / 0.001",
-    backgroundColor: "linear-gradient(198.2deg, #FFD765 1.54%, #F7C444 89.85%)",
-    projects: ["rdai", "tornado", "moloch"]
-  },
-  {
-    name: "Meta Cartel",
-    avatar: "metacartel.png",
-    followers: "21",
-    activeDAI: "50.22 / 0.002",
-    backgroundColor: "linear-gradient(198.2deg, #E65676 1.54%, #DB4967 89.85%)",
-    projects: ["rdai", "tornado", "moloch"]
-  },
-  {
-    name: "Kevin Owocki",
-    avatar: "andrew.png",
-    followers: "21",
-    activeDAI: "10.91 / 0.001",
-    backgroundColor: "linear-gradient(198.2deg, #7E58F5 1.54%, #6A36F4 89.85%)",
-    projects: ["rdai", "tornado", "moloch"]
-  }
-]
-
-const PriestListOutside = [
-  {
-    name: "Kevin Owocki",
-    avatar: "kevin.png",
-    followers: "18",
-    activeDAI: "200.21 / 0.001",
-    projects: ["rdai", "tornado", "moloch"]
-  },
-  {
-    name: "Meta Cartel",
-    avatar: "metacartel.png",
-    followers: "21",
-    activeDAI: "50.22 / 0.002",
-    projects: ["rdai", "tornado", "moloch"]
-  },
-  {
-    name: "Kevin Owocki",
-    avatar: "andrew.png",
-    followers: "21",
-    activeDAI: "10.91 / 0.001",
-    projects: ["rdai", "tornado", "moloch"]
-  },
-  {
-    name: "Kevin Owocki",
-    avatar: "andrew.png",
-    followers: "21",
-    activeDAI: "10.91 / 0.001",
-    projects: ["rdai", "tornado", "moloch"]
-  }
-]
-
-const cardMap = PriestList.map(item => {
-  return(
-    <Card backgroundColor={ item.backgroundColor }>
+const cardMap = priestList.map(item => {
+  return (
+    <Card backgroundColor={item.backgroundColor}>
       <CardInfo>
         <Avatar
-          style={{ backgroundImage: `url(${require("../../images/" + item.avatar)})` }}
+          style={{
+            backgroundImage: `url(${require(`../../images/${item.avatar}`)})`,
+          }}
         />
-        <CardTitle>{ item.name }</CardTitle>
+        <CardTitle>{item.name}</CardTitle>
         <CardDetails>
           <CardDetail>
             <h4>Followers</h4>
-            <h3> { item.followers } </h3>
+            <h3> {item.followers} </h3>
           </CardDetail>
           <CardDetail>
             <h4>Active DAI</h4>
-            <h3>{ item.activeDAI } </h3>
+            <h3>{item.activeDAI} </h3>
           </CardDetail>
         </CardDetails>
       </CardInfo>
@@ -308,23 +240,24 @@ const cardMap = PriestList.map(item => {
   )
 })
 
-
-const smallCardMap = PriestListOutside.map(item => {
-  return(
+const smallCardMap = priestListOutside.map(item => {
+  return (
     <SmallCard>
       <CardInfo>
         <SmallAvatar
-          style={{ backgroundImage: `url(${require("../../images/" + item.avatar)})` }}
+          style={{
+            backgroundImage: `url(${require("../../images/" + item.avatar)})`,
+          }}
         />
-        <SmallCardTitle>{ item.name }</SmallCardTitle>
+        <SmallCardTitle>{item.name}</SmallCardTitle>
         <CardDetails>
           <SmallCardDetail>
             <h4>Followers</h4>
-            <h3> { item.followers } </h3>
+            <h3> {item.followers} </h3>
           </SmallCardDetail>
           <SmallCardDetail>
             <h4>Active DAI</h4>
-            <h3>{ item.activeDAI } </h3>
+            <h3>{item.activeDAI} </h3>
           </SmallCardDetail>
         </CardDetails>
       </CardInfo>
@@ -345,16 +278,14 @@ const MainPage = () => {
     <Container>
       <H1>Donate towards causes these people support</H1>
       <P>
-        Donate your generated DAI interest towards projects chosen by community leaders.
+        Donate your generated DAI interest towards projects chosen by community
+        leaders.
+        <br />
         Stop donating at any time.
       </P>
       <StarterContainer>
-        <CardContainer>
-          { cardMap }
-        </CardContainer>
-        <SmallCardContainer>
-          { smallCardMap }
-        </SmallCardContainer>
+        <CardContainer>{cardMap}</CardContainer>
+        <SmallCardContainer>{smallCardMap}</SmallCardContainer>
       </StarterContainer>
     </Container>
   )

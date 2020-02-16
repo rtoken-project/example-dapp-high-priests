@@ -6,6 +6,9 @@ import RTokenAnalytics from "rtoken-analytics"
 var CryptoJS = require("crypto-js")
 import { navigate } from "gatsby"
 import { Context } from "../context"
+import PriestList from "../../data.js"
+import PriestListOutside from "../../data.js"
+import ProjectList from "../../data.js"
 
 const Loading = props => {
   if (props.error) {
