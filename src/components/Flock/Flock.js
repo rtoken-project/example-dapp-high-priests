@@ -10,8 +10,8 @@ import axios from "axios"
 const API_URL = "https://api.rdai.money"
 import hat from "../../images/hat.svg"
 import ethers from "ethers"
+import DappyModule from "./DappyModule"
 import Web3Utils from "./Web3/Web3Utils"
-import Loadable from "react-loadable"
 
 const Loading = props => {
   if (props.error) {
@@ -252,6 +252,7 @@ const Flock = () => {
         })
         const web3Utils = new Web3Utils()
         let isFollower = false
+        let amountActive = 0
         if (web3Utils.isWeb3EnabledBrowser()) {
           const {
             hasWallet,
@@ -260,13 +261,6 @@ const Flock = () => {
             error,
           } = await web3Utils.unlockWallet()
           if (error || !hasWallet) {
-            // Case: No wallet
-            // setState({
-            //   ...state,
-            //   growerAddress: "",
-            //   numTreesGrown: 0,
-            //   status: "error",
-            // })
             return
           }
           const { data } = await axios.get(
@@ -274,6 +268,10 @@ const Flock = () => {
           )
           const { hatID: userHatID } = data
           isFollower = userHatID === hatID
+          const user = sortedFollowers.find(
+            element => element.id.toLowerCase() === walletAddress.toLowerCase()
+          )
+          if (user && user.balance) amountActive = user.balance
         }
         setState({
           ...state,
@@ -281,6 +279,7 @@ const Flock = () => {
           totalDAI,
           sortedFollowers,
           isFollower,
+          amountActive,
           loadedHighPriest: priest,
         })
       }
@@ -337,34 +336,6 @@ const Flock = () => {
     }
   }, [])
 
-  const Loading = props => {
-    if (props.error) {
-      return (
-        <div>
-          Error! <button onClick={() => location.reload()}>Retry</button>
-        </div>
-      )
-    } else if (props.pastDelay) {
-      return <div></div>
-    } else if (props.timedOut) {
-      return (
-        <div>
-          Taking a long time...{" "}
-          <button onClick={() => location.reload()}>Retry</button>
-        </div>
-      )
-    } else {
-      return null
-    }
-  }
-  /*
-  const LoadableDappyModule = Loadable({
-    loader: () => import("./DappyModule"),
-    loading: Loading,
-    delay: 300, // 0.3 seconds
-    timeout: 10000, // 10 seconds
-  })*/
-
   return (
     <div>
       <Grid>
@@ -399,7 +370,14 @@ const Flock = () => {
           </Followers>
         </LeftSide>
 
-        <RightSide></RightSide>
+        <RightSide>
+          <DappyModule
+            firstName={state.loadedHighPriest.firstName}
+            isFollower={state.isFollower}
+            hatID={state.hatID}
+            amountActive={state.amountActive}
+          />
+        </RightSide>
       </Grid>
       <BackgroundColor></BackgroundColor>
     </div>

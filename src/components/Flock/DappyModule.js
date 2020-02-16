@@ -232,7 +232,6 @@ const followerOptions = {
         initial: {
           visual: InitialFollower,
           props: {
-            amountGenerated: 0,
             amountActive: 0,
             amountDAI: HIGHER_AMOUNT,
           },
@@ -408,9 +407,10 @@ const onToggleActive = id => {
   console.log(`Dappy ${id} is active`)
 }
 
-const DappyModule = ({ isFollower, firstName, hatID }) => {
+const DappyModule = ({ isFollower, firstName, hatID, amountActive }) => {
   nonFollowerOptions.stepDetails.initial.visualComponents.initial.props.firstName = firstName
   nonFollowerOptions.stepDetails.mintWithSelectedHat.hatID = hatID
+  followerOptions.stepDetails.initial.visualComponents.initial.props.amountActive = amountActive
   if (firstName === "") {
     return <>Loading...</>
   }

@@ -3,7 +3,7 @@ import React from "react"
 import styled from "styled-components"
 import Layout from "../components/Layout/Layout"
 import SEO from "../components/seo"
-import RedeemTokens from "../components/RedeemTokens/RedeemTokens"
+import RedeemDappy from "../components/Redeem/RedeemDappy"
 
 const CenteredContainer = styled.div`
   display: flex;
@@ -64,7 +64,7 @@ const StopPage = () => (
       <div>
         <H1>Farewell, devoted follower</H1>
         <P>Thanks for donating!</P>
-        <RedeemTokens />
+        <RedeemDappy />
       </div>
     </CenteredContainer>
     <Background />

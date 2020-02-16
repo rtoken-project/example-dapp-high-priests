@@ -32,7 +32,7 @@ module.exports = {
         //  https://developers.google.com/web/fundamentals/app-install-banners/
         // Prevent minibar from appearing until grove https://developers.google.com/web/fundamentals/app-install-banners/#preventing_the_mini-infobar_from_appearing
         display: `browser`,
-        icon: `src/images/mobile.png`,
+        icon: `src/images/icon.png`,
         cache_busting_mode: `query`,
       },
     },
