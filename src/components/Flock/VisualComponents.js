@@ -3,7 +3,7 @@ import hat from "../../images/hat.svg"
 import styled from "styled-components"
 
 export const InitialContainer = styled.div`
-  width: 310px;
+  width: 250px;
   margin-left: auto;
   height: 400px;
   background: linear-gradient(198.2deg, #ffd765 1.54%, #f7c444 89.85%);

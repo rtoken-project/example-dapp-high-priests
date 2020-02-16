@@ -194,7 +194,7 @@ const options = {
             onSubmitActionType: "props",
             onSubmit: event => {
               event.preventDefault()
-              console.log("button success clicked")
+              location.reload()
             },
           },
         },
