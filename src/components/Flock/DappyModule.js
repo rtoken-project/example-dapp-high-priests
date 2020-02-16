@@ -18,9 +18,9 @@ import {
   TxPendingMintVisual,
   SuccessVisual,
   TxAbortedVisual,
-  InitialVisual,
-  WalletPromptView,
 } from "./Feather"
+
+const BASE_AMOUNT = 10
 
 const options = {
   id: "supporter",
@@ -43,27 +43,13 @@ const options = {
         initial: {
           visual: InitialNonFollower,
           props: {
+            amountDAI: BASE_AMOUNT,
             firstName: "",
-            amountDAI: 10,
-            buttonTextColor: "#CC5521",
-            buttonBG: "linear-gradient(180deg, #FFFFFF 0%, #F6D8CB 100%)",
-            buttonShadow: "0px 12px 25px -10px #BE4815",
-            numberOfTrees: 10,
           },
         },
       },
       commonVisualProps: {
         size: "large",
-      },
-    },
-    chooseWallet: {
-      category: "web3",
-      type: "choose-wallet",
-      visualComponents: {
-        chooseWallet: {
-          visual: WalletPromptView,
-          props: {},
-        },
       },
     },
     unlockWallet: {
@@ -97,7 +83,7 @@ const options = {
       contractsToLoad: ["dai", "rdai"], // optional
       allowancesRequested: { tokens: ["dai"], spenders: ["rdai"] }, // optional
       balancesRequested: ["dai"], // optional
-      requiredBalances: { dai: 40 },
+      requiredBalances: { dai: BASE_AMOUNT },
       allowSwap: false,
       visualComponents: {
         loading: {
@@ -163,8 +149,7 @@ const options = {
         default: {
           visual: PreMintVisual,
           props: {
-            feeInDAI: "0.5",
-            feeInPercent: "0.2",
+            totalAmount: BASE_AMOUNT,
           },
         },
       },
@@ -176,7 +161,7 @@ const options = {
       category: "web3",
       type: "transaction",
       functionName: "mintWithSelectedHat",
-      hatIds: 75,
+      hatId: "75",
       visualComponents: {
         confirming: {
           visual: TxPendingMintVisual,
@@ -233,8 +218,9 @@ const onToggleActive = id => {
   console.log(`Dappy ${id} is active`)
 }
 
-const DappyModule = ({ isFollower, firstName }) => {
+const DappyModule = ({ isFollower, firstName, hatID }) => {
   options.stepDetails.initial.visualComponents.initial.props.firstName = firstName
+  options.stepDetails.mintWithSelectedHat.hatID = hatID
   if (isFollower) return <>Follower</>
   return (
     <>

@@ -62,7 +62,7 @@ const Button = styled.div`
   }
 `
 
-export const InitialNonFollower = ({ onSubmit, firstName }) => {
+export const InitialNonFollower = ({ onSubmit, firstName, amountDAI }) => {
   return (
     <InitialContainer>
       <img src={hat} />
@@ -70,7 +70,9 @@ export const InitialNonFollower = ({ onSubmit, firstName }) => {
       <p>
         Support {firstName}’s selected causes with interest your DAI generates.
       </p>
-      <Button onClick={() => onSubmit()}>Activate 40 DAI to Enter</Button>
+      <Button onClick={() => onSubmit(amountDAI)}>
+        Activate 40 DAI to Enter
+      </Button>
     </InitialContainer>
   )
 }

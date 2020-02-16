@@ -338,6 +338,7 @@ const Flock = () => {
           <DappyModule
             firstName={state.loadedHighPriest.firstName}
             isFollower={state.isFollower}
+            hatID={state.hatID}
           />
         </RightSide>
       </Grid>
