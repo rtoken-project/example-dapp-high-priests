@@ -325,13 +325,14 @@ const Flock = () => {
     }
   }, [])
 
-  if (state.sortedFollowers.length === 0)
+  if (state.sortedFollowers.length === 0) {
     return (
       <LoaderContainer>
         <Loader />
         <BackgroundColor></BackgroundColor>
       </LoaderContainer>
     )
+  }
   return (
     <div>
       <Grid>
