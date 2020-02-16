@@ -44,6 +44,10 @@ const LoaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "roobert_semibold", sans-serif;
+  font-size: 24px !important;
+  color: white;
+  margin-top: 32px;
 `
 
 const RightSide = styled.div`
@@ -325,9 +329,11 @@ const Flock = () => {
     }
   }, [])
 
-  if (state.sortedFollowers.length === 0) {
+  if (true) {
+    // if (state.sortedFollowers.length === 0) {
     return (
       <LoaderContainer>
+        <p>Please Unlock Your Wallet</p>
         <Loader />
         <BackgroundColor></BackgroundColor>
       </LoaderContainer>
