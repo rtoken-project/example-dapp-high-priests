@@ -6,10 +6,9 @@ import RTokenAnalytics from "rtoken-analytics"
 var CryptoJS = require("crypto-js")
 import { navigate } from "gatsby"
 import { Context } from "../context"
+import { priestList, projectList } from "../../data"
 
-import hat from '../../images/hat.svg';
-
-
+import hat from "../../images/hat.svg"
 
 const Loading = props => {
   if (props.error) {
@@ -40,7 +39,6 @@ const BackgroundColor = styled.div`
   left: 0;
   position: fixed;
   z-index: -1;
-
 `
 const Grid = styled.div`
   display: flex;
@@ -50,7 +48,7 @@ const Grid = styled.div`
 const LeftSide = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%; 
+  width: 60%;
   margin-right: 5%;
 
   h2 {
@@ -63,7 +61,7 @@ const LeftSide = styled.div`
 
 const RightSide = styled.div`
   display: flex;
-  width: 30%; 
+  width: 30%;
   margin-left: 5%;
 `
 
@@ -78,13 +76,11 @@ const Profile = styled.div`
   }
 `
 
-
-
 const Avatar = styled.div`
   width: 100px;
   margin-right: 20px;
   height: 100px;
-  border-radius:100%;
+  border-radius: 100%;
   background-size: cover;
   background-color: red;
 `
@@ -93,7 +89,7 @@ const DappyWidget = styled.div`
   width: 310px;
   margin-left: auto;
   height: 400px;
-  background: linear-gradient(198.2deg, #FFD765 1.54%, #F7C444 89.85%);
+  background: linear-gradient(198.2deg, #ffd765 1.54%, #f7c444 89.85%);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -110,13 +106,11 @@ const DappyWidget = styled.div`
     font-size: 32px;
     color: white;
   }
-  
+
   p {
     font-family: "roobert_medium", sans-serif;
     font-size: 18px;
     color: black;
-
-
   }
 `
 
@@ -140,8 +134,7 @@ const ActiveDAI = styled.div`
   }
 `
 
-
-const Stats = styled.div`  
+const Stats = styled.div`
   display: flex;
   flex-direction: column !important;
   align-self: right;
@@ -156,14 +149,12 @@ const Stats = styled.div`
 `
 
 const Grantees = styled.div`
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
 `
 
-const H5 = styled.h5 `
+const H5 = styled.h5`
   font-family: "roobert_medium", sans-serif;
   color: white;
   opacity: 0.6;
@@ -171,15 +162,14 @@ const H5 = styled.h5 `
 `
 
 const Grantee = styled.div`
- display: flex;
- padding: 30px;
- flex-direction: column;
- justify-content: space-between;
- width: 225px;
- background-color: #1F2240;
- border-radius: 12px;
- height: 175px;
-
+  display: flex;
+  padding: 30px;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 225px;
+  background-color: #1f2240;
+  border-radius: 12px;
+  height: 175px;
 
   h4 {
     font-family: "roobert_medium", sans-serif;
@@ -187,17 +177,15 @@ const Grantee = styled.div`
     color: white;
     max-width: 60%;
   }
-
-  `
+`
 
 const AquiredDai = styled.div`
-  p { 
+  p {
     font-size: 12px;
     font-family: "roobert_medium", sans-serif;
     color: white;
     opacity: 0.6;
     margin-bottom: 4px;
-  
   }
 
   h5 {
@@ -218,7 +206,7 @@ const Followers = styled.div`
   color: white;
   display: flex;
   height: 230px;
-  background-color: #0E0F20;
+  background-color: #0e0f20;
   align-items: center;
   justify-content: center;
   margin-bottom: 80px;
@@ -226,10 +214,7 @@ const Followers = styled.div`
   p {
     margin-bottom: 0;
   }
-
 `
-
-
 
 const Button = styled.div`
   font-family: "roobert_bold", sans-serif;
@@ -243,24 +228,23 @@ const Button = styled.div`
   align-items: center;
   border-radius: 12px;
   background-color: white;
-  transition: all 0.2s ease; 
+  transition: all 0.2s ease;
 
   box-shadow: 0px 12px 25px -10px rgba(18, 20, 39, 0.4);
 
   :hover {
     cursor: pointer;
-    transform: translateY(-3px); 
-    transition: all 0.2s ease; 
+    transform: translateY(-3px);
+    transition: all 0.2s ease;
     box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
   }
 
   :active {
     cursor: pointer;
-    transform: scale(0.98); 
-    transition: all 0.2s ease; 
+    transform: scale(0.98);
+    transition: all 0.2s ease;
     box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
   }
-
 `
 
 const Flock = () => {
@@ -269,7 +253,28 @@ const Flock = () => {
   const [state, setState] = useState({})
 
   const loadDetails = async () => {
+    // check URL for priest hat ID
+
+    if (window.location.href.indexOf(hatID) > -1) {
+      setState({ hatID: getUrlVars()[hatID] })
+    } else setState({ hatID: 71 })
+
+    setState({
+      loadedHighPriest: PriestList.find(
+        element => element.hatID === state.hatID
+      ),
+    })
+
     // load stuff
+    fetch(/*URL Of API*/)
+      .then(response => {
+        return response.json()
+      })
+      .then(myJson => {
+        // here I have to get the whole amount of DAI "under management"
+        setState({ ...state, totalDAI: 1000 })
+        console.log(myJson)
+      })
   }
 
   useEffect(() => {
@@ -280,86 +285,65 @@ const Flock = () => {
     }
   }, [])
 
+  const granteeList = state.loadedHighPriest.projects.map(id => {
+    return (
+      <Grantee>
+        <h4>{ProjectList.find(item => item.id === id).name}</h4>
+        <AquiredDai>
+          <p>Coffer allocation</p>
+          <h5>{(state.totalDAI * 0.95) / 3}</h5>
+        </AquiredDai>
+      </Grantee>
+    )
+  })
+
   return (
     <div>
       <Grid>
         <LeftSide>
           <Profile>
-
             <div>
               <Avatar></Avatar>
-              <h2>Kevin <br/>Owocki</h2>
+              <h2>
+                Kevin <br />
+                Owocki
+              </h2>
             </div>
 
             <div>
               <Stats>
-                <h5>Active DAI</h5>
+                <h5>DAI coffer</h5>
                 <ActiveDAI>
                   <h3>$210.22</h3>
                   <h4>/ $0.001</h4>
                 </ActiveDAI>
               </Stats>
-            </div>     
+            </div>
           </Profile>
-
 
           <H5>Supporting three projects</H5>
 
-          <Grantees>
-            <Grantee>
-              <h4>Tornado Cash</h4>
-              <AquiredDai>
-                <p>Aquired DAI</p>
-                <h5>$21.22 DAI</h5>
-              </AquiredDai>
-            </Grantee>
-            <Grantee>
-              <h4>Tornado Cash</h4>
-              <AquiredDai>
-                <p>Aquired DAI</p>
-                <h5>$21.22 DAI</h5>
-              </AquiredDai>
-            </Grantee>
-            <Grantee>
-              <h4>Tornado Cash</h4>
-              <AquiredDai>
-                <p>Aquired DAI</p>
-                <h5>$21.22 DAI</h5>
-              </AquiredDai>
-            </Grantee>
-          </Grantees>
+          <Grantees>{granteeList}</Grantees>
 
           <Followers>
             <p>Join the flock to see who's following</p>
           </Followers>
-          
-
         </LeftSide>
 
         <RightSide>
-
           <DappyWidget>
             <img src={hat} />
             <h3>Join Kevin's flock</h3>
-            <p>Support Kevin’s selected causes with interest your DAI generates.</p>
+            <p>
+              Support Kevin’s selected causes with interest your DAI generates.
+            </p>
             <Button>Activate $40 DAI to Enter</Button>
-
-            
-          
-        
           </DappyWidget>
-
-
         </RightSide>
-
-
       </Grid>
       <BackgroundColor></BackgroundColor>
     </div>
-
-
   )
-  
 }
 
 export default Flock
