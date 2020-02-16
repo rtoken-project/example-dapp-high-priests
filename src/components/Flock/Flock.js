@@ -263,8 +263,7 @@ const Flock = () => {
           const user = sortedFollowers.find(
             element => element.id.toLowerCase() === walletAddress.toLowerCase()
           )
-          amountActive = user.balance
-          console.log(user.balance)
+          if (user && user.balance) amountActive = user.balance
         }
         setState({
           ...state,

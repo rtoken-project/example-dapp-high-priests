@@ -144,7 +144,8 @@ export const InitialNonFollower = ({ onSubmit, firstName, amountDAI }) => {
       <img src={hat} />
       <h3>Join {firstName}'s flock</h3>
       <p>
-        Support {firstName}’s selected causes with interest your DAI generates.
+        Make a spendless offering to the open source projects {firstName}{" "}
+        supports using the interest your DAI generates.
       </p>
       <Button onClick={() => onSubmit(amountDAI)}>
         Activate 40 DAI to Enter
@@ -165,7 +166,7 @@ export const InitialFollower = ({
       <p>Your offering:</p>
       <h4>{Number(amountActive).toFixed(0)} DAI</h4>
       <FollowerButton onClick={() => onSubmit(amountDAI)}>
-        Boost your offering
+        Activate {amountDAI} more DAI
       </FollowerButton>
       <StopButton to="/stop">Stop Donating</StopButton>
     </FollowerContainer>

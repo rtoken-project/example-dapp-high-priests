@@ -25,7 +25,7 @@ function SEO({ description, lang, meta, title, image }) {
     `
   )
 
-  const defaultImage = "https://imgur.com/sjOWQbm.png"
+  const defaultImage = "https://imgur.com/4pzHfLQ"
   const metaDescription = description || site.siteMetadata.description
   const socialImage = image || defaultImage
   const pageTitle = `${title} | ${site.siteMetadata.title}`
