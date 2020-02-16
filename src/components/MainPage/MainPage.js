@@ -25,7 +25,7 @@ const H1 = styled.h1`
 const P = styled.p`
   font-family: "roobert_medium", sans-serif;
   font-size: 22px;
-  max-width: 550px;
+  max-width: 600px;
   margin: 15px auto 15px;
   line-height: 1.3;
   opacity: 0.7;
@@ -71,6 +71,11 @@ const RightTab = styled.div`
   margin-bottom: 15px;
   padding-bottom: 0px;
   cursor: pointer;
+  text-align: right;
+
+  h5 {
+    text-align: right;
+  }
   ${({ active }) =>
     active &&
     `
@@ -116,16 +121,21 @@ const Card = styled.div`
   justify-content: space-between;
   min-height: 400px;
   background: ${props => props.backgroundColor};
-  transition: 2.5s;
+  transition: all 0.3s cubic-bezier(.64,.22,.16,.78);
+  text-shadow: 0px 2px 2px rgba(18, 20, 39, 0.16);
+
+
 
   &:nth-of-type(1) {
-    text-shadow: 1px 0px #ccc;
+    transition: all 0.3s ease;
     margin: ${({ isLeaderboard }) => {
       if (!isLeaderboard) return "40px 10px"
       return "60px 10px 10px 10px"
     }};
   }
   &:nth-of-type(2) {
+    transition: all 0.3s ease;
+
     margin: ${({ isLeaderboard }) => {
       if (!isLeaderboard) return "40px 10px"
       return "10px 10px 60px 10px"
@@ -195,12 +205,26 @@ const StatList = styled.div`
 const LogoList = styled.ul`
   list-style: none;
   text-align: left;
-  font-size: 0.8em;
+  font-size: 18px;
   margin-left: 0;
   margin-top: 0px;
   margin-bottom: 0px;
   line-height: 40px;
   vertical-align: middle;
+
+  h5 {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 12px;
+    margin-top: 16px;
+    text-shadow: none;
+  }
+
+  li {
+    font-family: "roobert_medium", sans-serif !important;
+
+  }
+
 
   img {
     width: 38px;
@@ -245,12 +269,12 @@ const Avatar = styled.div`
   background-size: cover;
 `
 const Position = styled.div`
-  font-size: 3.2em;
+  font-size: 32px;
   margin-top: 20px;
   margin-right: 5px;
   color: white;
   font-family: "roobert_medium", sans-serif;
-  transition: 2s;
+  transition: all 0.3s ease;
   opacity: ${({ show }) => (!show ? 0 : 1)};
   position: relative;
 
@@ -286,9 +310,19 @@ const SmallAvatar = styled.div`
 `
 
 const ProjectList = styled.div`
-  font-size: 0.7em;
+  font-size: 18px;
   text-align: left;
   padding: 1.8em 0;
+  font-family: "roobert_medium", sans-serif;
+
+  h5 {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 12px;
+    margin-top: 0px;
+    text-shadow: none;
+  }
+
 `
 
 const TextLink = styled(Link)`
@@ -450,20 +484,25 @@ const MainPage = () => {
     }
     const { projects } = item
     return (
-      <LogoList>
-        <li>
-          <img src={require(`../../images/logos/${projects[0]}.png`)} />{" "}
-          {projectList[projects[0]].name}{" "}
-        </li>
-        <li>
-          <img src={require(`../../images/logos/${projects[1]}.png`)} />{" "}
-          {projectList[projects[1]].name}{" "}
-        </li>
-        <li>
-          <img src={require(`../../images/logos/${projects[2]}.png`)} />{" "}
-          {projectList[projects[2]].name}{" "}
-        </li>
-      </LogoList>
+      <div>
+        <LogoList>
+          <h5>Evangelizing for</h5>
+          <li>
+            <img src={require(`../../images/logos/${projects[0]}.png`)} />{" "}
+            {projectList[projects[0]].name}{" "}
+          </li>
+          <li>
+            <img src={require(`../../images/logos/${projects[1]}.png`)} />{" "}
+            {projectList[projects[1]].name}{" "}
+          </li>
+          <li>
+            <img src={require(`../../images/logos/${projects[2]}.png`)} />{" "}
+            {projectList[projects[2]].name}{" "}
+          </li>
+        </LogoList>
+
+      </div>
+     
     )
   }
   const SmallCardDetailsView = ({ item }) => {
@@ -484,6 +523,7 @@ const MainPage = () => {
     const { projects } = item
     return (
       <ProjectList>
+        <h5>Evangelizing for</h5>
         <span>
           {projectList[projects[0]].name}
           <br />
@@ -497,7 +537,6 @@ const MainPage = () => {
   const cardMap = state.topPriests.map((item, index) => {
     return (
       <Card
-        key={item.hatID}
         backgroundColor={item.backgroundColor}
         position={index || 3}
         isLeaderboard={state.isLeaderboard}
@@ -527,7 +566,7 @@ const MainPage = () => {
 
   const smallCardMap = state.lowerPriests.map(item => {
     return (
-      <SmallCard key={item.hatID}>
+      <SmallCard>
         <CardInfo>
           <SmallAvatar
             style={{

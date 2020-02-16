@@ -145,7 +145,7 @@ export const InitialNonFollower = ({ onSubmit, firstName, amountDAI }) => {
       <h3>Join {firstName}'s flock</h3>
       <p>
         Make a spendless offering to {firstName}'s recipients using the interest
-        your DAI generates.
+        your DAI generates
       </p>
       <Button onClick={() => onSubmit(amountDAI)}>
         Activate 40 DAI to join
@@ -162,7 +162,7 @@ export const InitialFollower = ({
 }) => {
   return (
     <FollowerContainer>
-      <h3>You are in the Flock</h3>
+      <h3>You are in the flock</h3>
       <p>Your offering:</p>
       <h4>{Number(amountActive).toFixed(0)} DAI</h4>
       <FollowerButton onClick={() => onSubmit(amountDAI)}>

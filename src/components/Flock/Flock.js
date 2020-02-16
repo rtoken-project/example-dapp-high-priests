@@ -10,7 +10,7 @@ import axios from "axios"
 const API_URL = "https://api.rdai.money"
 import hat from "../../images/hat.svg"
 import ethers from "ethers"
-import DappyModule from "./DappyModule"
+// import DappyModule from "./DappyModule"
 import Web3Utils from "./Web3/Web3Utils"
 import Loader from "./Loader"
 
@@ -91,6 +91,7 @@ const Stats = styled.div`
   display: flex;
   flex-direction: column !important;
   align-self: right;
+  margin-left: 30px;
 
   h5 {
     font-family: "roobert_medium", sans-serif;
@@ -293,7 +294,7 @@ const Flock = () => {
       <Grantee key={id.name}>
         <h4>{projectList.find(item => item.id === id).name}</h4>
         <AquiredDai>
-          <p>Coffers allocating</p>
+          <p>Coffers generating</p>
           <h5>
             {((state.totalDAI * 0.95 * state.compoundRate) / 3).toFixed(2)} DAI
             per year
@@ -329,8 +330,7 @@ const Flock = () => {
     }
   }, [])
 
-  if (true) {
-    // if (state.sortedFollowers.length === 0) {
+    if (state.sortedFollowers.length === 0) {
     return (
       <LoaderContainer>
         <p>Please Unlock Your Wallet</p>
@@ -357,30 +357,38 @@ const Flock = () => {
                 <h5>Coffers</h5>
                 <ActiveDAI>
                   <h3>{state.totalDAI.toFixed(0)} DAI</h3>
+                </ActiveDAI>
+              </Stats>
+              <Stats>
+                <h5>Generating</h5>
+                <ActiveDAI>
+                  <h3>{(state.totalDAI * state.compoundRate).toFixed(2)} DAI</h3>
                   <h4>
-                    {(state.totalDAI * state.compoundRate).toFixed(2)} DAI per
+                    per
                     year
                   </h4>
                 </ActiveDAI>
               </Stats>
+              
+
             </div>
           </Profile>
 
           <H2>Recipients</H2>
           <Grantees>{granteeList}</Grantees>
           <Followers>
-            <H2>Followers</H2>
+            <H2>{state.loadedHighPriest.firstName}'s flock</H2>
             <FollowersList></FollowersList>
           </Followers>
         </LeftSide>
 
         <RightSide>
-          <DappyModule
+          {/* <DappyModule
             firstName={state.loadedHighPriest.firstName}
             isFollower={state.isFollower}
             hatID={state.hatID}
             amountActive={state.amountActive}
-          />
+          /> */}
         </RightSide>
       </Grid>
       <BackgroundColor></BackgroundColor>
