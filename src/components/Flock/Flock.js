@@ -12,28 +12,7 @@ import hat from "../../images/hat.svg"
 import ethers from "ethers"
 import DappyModule from "./DappyModule"
 import Web3Utils from "./Web3/Web3Utils"
-
-const Loading = props => {
-  if (props.error) {
-    console.log(props.error)
-    return (
-      <div>
-        Error! <button onClick={() => location.reload()}>Retry</button>
-      </div>
-    )
-  } else if (props.pastDelay) {
-    return <div></div>
-  } else if (props.timedOut) {
-    return (
-      <div>
-        Taking a long time...{" "}
-        <button onClick={() => location.reload()}>Retry</button>
-      </div>
-    )
-  } else {
-    return null
-  }
-}
+import Loader from "./Loader"
 
 const BackgroundColor = styled.div`
   background-color: #121427;
@@ -60,6 +39,11 @@ const LeftSide = styled.div`
     color: white;
     font-family: "roobert_bold", sans-serif;
   }
+`
+const LoaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 const RightSide = styled.div`
@@ -227,14 +211,13 @@ const Flock = () => {
     totalDAI: 0,
     isFollower: false,
     sortedFollowers: [],
-    compoundRate: 0
+    compoundRate: 0,
   })
 
-
   const loadDetails = async () => {
-    // check URL for priest hat ID
     try {
-      if (typeof window !== "undefined") {
+      const web3Utils = new Web3Utils()
+      if (web3Utils.isWeb3EnabledBrowser()) {
         const queryString = window.location.search
         const urlParams = new URLSearchParams(queryString)
         const hatID = urlParams.get("hatID")
@@ -251,39 +234,32 @@ const Flock = () => {
         const sortedFollowers = data.accounts.sort((a, b) => {
           return b.balance - a.balance
         })
-        const web3Utils = new Web3Utils()
         let isFollower = false
         let amountActive = 0
-        if (web3Utils.isWeb3EnabledBrowser()) {
-          const {
-            hasWallet,
-            walletAddress,
-            network,
-            error,
-          } = await web3Utils.unlockWallet()
-          if (error || !hasWallet) {
-            return
-          }
-          const { data } = await axios.get(
-            `${API_URL}/v1/getHatIDByAddress?owner=${walletAddress}`
-          )
-          const { hatID: userHatID } = data
-          isFollower = userHatID === hatID
-          const user = sortedFollowers.find(
-            element => element.id.toLowerCase() === walletAddress.toLowerCase()
-          )
-          if (user && user.balance) amountActive = user.balance
-          const COMPOUND_URL = 'https://api.compound.finance/api/v2/ctoken?addresses[]=';
-          const daiCompoundAddress = '0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643';
-            const res = await axios.get(`${COMPOUND_URL}${daiCompoundAddress}`);
-            compoundRate = res.data.cToken[0].supply_rate.value;
-            // const compoundRateFormatted = Math.round(compoundRate * 10000) / 100;
-            // return {
-            //   compoundRate,
-            //   compoundRateFormatted
-            // };
-          };
+        const {
+          hasWallet,
+          walletAddress,
+          network,
+          error,
+        } = await web3Utils.unlockWallet()
+        if (error || !hasWallet) {
+          return
         }
+        const { data: data2 } = await axios.get(
+          `${API_URL}/v1/getHatIDByAddress?owner=${walletAddress}`
+        )
+        const { hatID: userHatID } = data2
+        isFollower = userHatID === hatID
+        const user = sortedFollowers.find(
+          element => element.id.toLowerCase() === walletAddress.toLowerCase()
+        )
+        if (user && user.balance) amountActive = user.balance
+        let compoundRate = 0
+        const COMPOUND_URL =
+          "https://api.compound.finance/api/v2/ctoken?addresses[]="
+        const daiCompoundAddress = "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643"
+        const res = await axios.get(`${COMPOUND_URL}${daiCompoundAddress}`)
+        compoundRate = res.data.cToken[0].supply_rate.value
         setState({
           ...state,
           hatID,
@@ -309,15 +285,14 @@ const Flock = () => {
   }, [])
 
   const granteeList = state.loadedHighPriest.projects.map(id => {
-    console.log(state.compoundRate);
     return (
-      <Grantee>
+      <Grantee key={id.name}>
         <h4>{projectList.find(item => item.id === id).name}</h4>
         <AquiredDai>
           <p>Coffers allocating</p>
           <h5>
-            {((state.totalDAI * 0.95 * state.compoundRate) / 3).toFixed(2)} DAI per
-            year
+            {((state.totalDAI * 0.95 * state.compoundRate) / 3).toFixed(2)} DAI
+            per year
           </h5>
         </AquiredDai>
       </Grantee>
@@ -350,6 +325,13 @@ const Flock = () => {
     }
   }, [])
 
+  if (state.compoundRate === 0)
+    return (
+      <LoaderContainer>
+        <Loader />
+        <BackgroundColor></BackgroundColor>
+      </LoaderContainer>
+    )
   return (
     <div>
       <Grid>
@@ -369,7 +351,8 @@ const Flock = () => {
                 <ActiveDAI>
                   <h3>{state.totalDAI.toFixed(0)} DAI</h3>
                   <h4>
-                    {(state.totalDAI * state.compoundRate).toFixed(2)} DAI per year
+                    {(state.totalDAI * state.compoundRate).toFixed(2)} DAI per
+                    year
                   </h4>
                 </ActiveDAI>
               </Stats>
