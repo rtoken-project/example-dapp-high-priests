@@ -12,28 +12,7 @@ import hat from "../../images/hat.svg"
 import ethers from "ethers"
 import DappyModule from "./DappyModule"
 import Web3Utils from "./Web3/Web3Utils"
-
-const Loading = props => {
-  if (props.error) {
-    console.log(props.error)
-    return (
-      <div>
-        Error! <button onClick={() => location.reload()}>Retry</button>
-      </div>
-    )
-  } else if (props.pastDelay) {
-    return <div></div>
-  } else if (props.timedOut) {
-    return (
-      <div>
-        Taking a long time...{" "}
-        <button onClick={() => location.reload()}>Retry</button>
-      </div>
-    )
-  } else {
-    return null
-  }
-}
+import Loader from "./Loader"
 
 const BackgroundColor = styled.div`
   background-color: #121427;
@@ -60,6 +39,11 @@ const LeftSide = styled.div`
     color: white;
     font-family: "roobert_bold", sans-serif;
   }
+`
+const LoaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 const RightSide = styled.div`
@@ -302,7 +286,7 @@ const Flock = () => {
 
   const granteeList = state.loadedHighPriest.projects.map(id => {
     return (
-      <Grantee>
+      <Grantee key={id.name}>
         <h4>{projectList.find(item => item.id === id).name}</h4>
         <AquiredDai>
           <p>Coffers allocating</p>
@@ -341,6 +325,13 @@ const Flock = () => {
     }
   }, [])
 
+  if (state.compoundRate === 0)
+    return (
+      <LoaderContainer>
+        <Loader />
+        <BackgroundColor></BackgroundColor>
+      </LoaderContainer>
+    )
   return (
     <div>
       <Grid>

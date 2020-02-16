@@ -497,6 +497,7 @@ const MainPage = () => {
   const cardMap = state.topPriests.map((item, index) => {
     return (
       <Card
+        key={item.hatID}
         backgroundColor={item.backgroundColor}
         position={index || 3}
         isLeaderboard={state.isLeaderboard}
@@ -526,7 +527,7 @@ const MainPage = () => {
 
   const smallCardMap = state.lowerPriests.map(item => {
     return (
-      <SmallCard>
+      <SmallCard key={item.hatID}>
         <CardInfo>
           <SmallAvatar
             style={{
