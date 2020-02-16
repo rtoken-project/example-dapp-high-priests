@@ -121,10 +121,8 @@ const Card = styled.div`
   justify-content: space-between;
   min-height: 400px;
   background: ${props => props.backgroundColor};
-  transition: all 0.3s cubic-bezier(.64,.22,.16,.78);
+  transition: all 0.3s cubic-bezier(0.64, 0.22, 0.16, 0.78);
   text-shadow: 0px 2px 2px rgba(18, 20, 39, 0.16);
-
-
 
   &:nth-of-type(1) {
     transition: all 0.3s ease;
@@ -222,9 +220,7 @@ const LogoList = styled.ul`
 
   li {
     font-family: "roobert_medium", sans-serif !important;
-
   }
-
 
   img {
     width: 38px;
@@ -322,7 +318,6 @@ const ProjectList = styled.div`
     margin-top: 0px;
     text-shadow: none;
   }
-
 `
 
 const TextLink = styled(Link)`
@@ -406,7 +401,7 @@ const MainPage = () => {
         })
 
         const topPriests = localPriestList.filter(
-          item => item.hatID === 72 || item.hatID === 73 || item.hatID === 79
+          item => item.hatID === 72 || item.hatID === 81 || item.hatID === 79
         )
         topPriests[0].backgroundColor =
           "linear-gradient(198.2deg, #FFD765 1.54%, #F7C444 89.85%)"
@@ -500,9 +495,7 @@ const MainPage = () => {
             {projectList[projects[2]].name}{" "}
           </li>
         </LogoList>
-
       </div>
-     
     )
   }
   const SmallCardDetailsView = ({ item }) => {

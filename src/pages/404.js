@@ -61,7 +61,7 @@ const NotFoundPage = () => (
 
     <CenteredContainer>
       <div>
-        <H1>🗺 Oops, no page here</H1>
+        <H1>🗺 Oops, we couldn't find that page</H1>
         <P>We hope you find your flock.</P>
       </div>
     </CenteredContainer>

@@ -227,12 +227,18 @@ const Flock = () => {
         const queryString = window.location.search
         const urlParams = new URLSearchParams(queryString)
         const hatID = urlParams.get("hatID")
+        const whiteListedHats = priestList.map(priest =>
+          priest.hatID.toString()
+        )
+        if (!whiteListedHats.includes(hatID))
+          return location.replace("https://highpriests.rdai.money/404/")
         const priest = priestList.find(element => {
           return element.hatID.toString() === hatID.toString()
         })
-        // load stuff
+        // load all users
         const url = `${API_URL}/v1/allUsersWithHat/?hatID=${hatID}`
         const { data } = await axios.get(url)
+        // Get funding stats
         let totalDAI = 0
         if (typeof data !== "undefined") {
           totalDAI = data.accounts.reduce((a, b) => a + Number(b.balance), 0)
@@ -240,16 +246,17 @@ const Flock = () => {
         const sortedFollowers = data.accounts.sort((a, b) => {
           return b.balance - a.balance
         })
+        // 3BOX
         const opts = { metadata: true, profileServer: true }
         for (let index = 0; index < sortedFollowers.length; index++) {
           const profile = await Box.getProfile(sortedFollowers[index].id)
           const { image, name } = profile
           if (name) sortedFollowers[index].name = name
           if (image) {
-            console.log(image[0].contentUrl["/"])
             sortedFollowers[index].image = image[0].contentUrl["/"]
           }
         }
+        // Get user data
         let isFollower = false
         let amountActive = 0
         const {
@@ -265,11 +272,13 @@ const Flock = () => {
           `${API_URL}/v1/getHatIDByAddress?owner=${walletAddress}`
         )
         const { hatID: userHatID } = data2
-        isFollower = userHatID === hatID
         const user = sortedFollowers.find(
           element => element.id.toLowerCase() === walletAddress.toLowerCase()
         )
-        if (user && user.balance) amountActive = user.balance
+        if (user && user.balance > 0) {
+          isFollower = userHatID === hatID
+          amountActive = user.balance
+        }
         let compoundRate = 0
         const COMPOUND_URL =
           "https://api.compound.finance/api/v2/ctoken?addresses[]="
@@ -315,11 +324,14 @@ const Flock = () => {
     )
   })
   const sortedFollowerList = state.sortedFollowers.map(item => {
-    console.log(item.image)
     return (
       <LI key={item.id}>
         {item.image && (
-          <img src={"https://ipfs.io/ipfs/" + item.image} width={50} />
+          <img
+            alt={item.name}
+            src={"https://ipfs.io/ipfs/" + item.image}
+            width={50}
+          />
         )}
         <h4>{item.name || item.id}</h4>
         <p>{Number(item.balance).toFixed(2)} DAI</p>

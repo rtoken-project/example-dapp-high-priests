@@ -1,11 +1,12 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
+import Logo from "../../../images/logo.svg"
 import Web3Utils from "../../Flock/Web3/Web3Utils"
 import axios from "axios"
 const API_URL = "https://api.rdai.money"
 
-import Logo from "../../../images/logo.svg"
+import logo from "../../../images/hat.svg"
 
 const StyledButton = styled(Link)`
   font-family: "roobert_semibold";
@@ -74,6 +75,9 @@ const LogoLink = styled(Link)`
       font-size: 13px;
     }
   }
+  img {
+    width: 40px;
+  }
 `
 const GithubLink = styled.a`
   display: flex;
@@ -141,6 +145,7 @@ const Header = () => {
         }}
       >
         <LogoLink to="/">
+          <img src={logo} />
           <h3>High Priests</h3>
         </LogoLink>
         <GithubLink

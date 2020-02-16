@@ -18,6 +18,7 @@ export const projectList = [
   { id: 12, name: "rDAI", url: "https://rdai.money/" },
   { id: 13, name: "ETHTurin", url: "https://ethturin.com/" },
   { id: 14, name: "DAppNode", url: "https://dappnode.io" },
+  { id: 15, name: "CryptoScamDB", url: "https://cryptoscamdb.org" },
 ]
 
 export const priestList = [
@@ -42,8 +43,8 @@ export const priestList = [
     twitter: "tayvano",
     followerCount: "loading",
     totalDAI: "loading",
-    projects: [1, 9, 0],
-    hatID: 73,
+    projects: [1, 9, 15],
+    hatID: 81,
   },
   {
     name: "Ameen Soleimani",
