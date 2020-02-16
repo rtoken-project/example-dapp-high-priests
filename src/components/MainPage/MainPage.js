@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
-import { priestList, priestListOutside } from "../../data"
+import { priestList } from "../../data"
 import "../fonts.css"
 
 const H1 = styled.h1`
@@ -57,13 +57,14 @@ const CardContainer = styled.div`
 
 const SmallCardContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   max-width: 1000px;
   margin: 0 auto;
+  flex-wrap: wrap;
 `
 
 const Card = styled.div`
-  margin: 1em;
+  margin: 10px;
   width: 310px;
   background: white;
   border-radius: 1em;
@@ -77,8 +78,8 @@ const Card = styled.div`
 `
 
 const SmallCard = styled.div`
-  margin: 1em;
-  width: 230px;
+  margin: 10px;
+  width: 228px;
   background: white;
   border-radius: 1em;
   padding: 10px;
@@ -93,7 +94,6 @@ const CardTitle = styled.div`
   font-size: 32px;
   font-weight: 600;
   line-height: 1.3;
-  max-width: 90%;
   font-family: "roobert_medium", sans-serif;
   text-align: left;
 `
@@ -204,12 +204,6 @@ const Button = styled.div`
     box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
   }
 `
-/*
-backgroundColor: "linear-gradient(198.2deg, #FFD765 1.54%, #F7C444 89.85%)",
-backgroundColor: "linear-gradient(198.2deg, #E65676 1.54%, #DB4967 89.85%)",
-backgroundColor: "linear-gradient(198.2deg, #7E58F5 1.54%, #6A36F4 89.85%)",
-
-*/
 const CardInfo = styled.div`
   padding: 20px;
   display: flex;
@@ -219,65 +213,120 @@ const CardInfo = styled.div`
   color: white;
 `
 
-const cardMap = priestList.map(item => {
-  return (
-    <Card backgroundColor={item.backgroundColor}>
-      <CardInfo>
-        <Avatar
-          style={{
-            backgroundImage: `url(${require(`../../images/${item.avatar}`)})`,
-          }}
-        />
-        <CardTitle>{item.name}</CardTitle>
-        <CardDetails>
-          <CardDetail>
-            <h4>Followers</h4>
-            <h3> {item.followers} </h3>
-          </CardDetail>
-          <CardDetail>
-            <h4>Active DAI</h4>
-            <h3>{item.activeDAI} </h3>
-          </CardDetail>
-        </CardDetails>
-      </CardInfo>
-      <Button>Join the flock</Button>
-    </Card>
-  )
-})
-
-const smallCardMap = priestListOutside.map(item => {
-  return (
-    <SmallCard>
-      <CardInfo>
-        <SmallAvatar
-          style={{
-            backgroundImage: `url(${require("../../images/" + item.avatar)})`,
-          }}
-        />
-        <SmallCardTitle>{item.name}</SmallCardTitle>
-        <CardDetails>
-          <SmallCardDetail>
-            <h4>Followers</h4>
-            <h3> {item.followers} </h3>
-          </SmallCardDetail>
-          <SmallCardDetail>
-            <h4>Active DAI</h4>
-            <h3>{item.activeDAI} </h3>
-          </SmallCardDetail>
-        </CardDetails>
-      </CardInfo>
-    </SmallCard>
-  )
-})
-
 const MainPage = () => {
-  const updateStats = async () => {
-    // do stuff
+  //const [context, setContext] = useContext(Context)
+
+  const [state, setState] = useState({
+    topPriests: [],
+    lowerPriests: [],
+  })
+
+  const loadDetails = async () => {
+    // check URL for priest hat ID
+    try {
+      if (typeof window !== "undefined") {
+        /*
+        const queryString = window.location.search
+        const urlParams = new URLSearchParams(queryString)
+        const hatID = urlParams.get("hatID")
+        const priest = priestList.find(element => {
+          return element.hatID.toString() === hatID.toString()
+        })
+        // load stuff
+        const url = `${API_URL}/v1/allUsersWithHat/?hatID=${hatID}`
+        console.log(url)
+        const { data } = await axios.get(url)
+        let totalDAI = 0
+        if (typeof data !== "undefined") {
+          totalDAI = data.accounts.reduce((a, b) => a + Number(b.balance), 0)
+        }
+        const sortedFollowers = data.accounts.sort((a, b) => {
+          return b.balance - a.balance
+        })*/
+
+        const topPriests = priestList.filter(
+          item => item.hatID === 72 || item.hatID === 73 || item.hatID === 79
+        )
+        topPriests[0].backgroundColor =
+          "linear-gradient(198.2deg, #FFD765 1.54%, #F7C444 89.85%)"
+        topPriests[1].backgroundColor =
+          "linear-gradient(198.2deg, #E65676 1.54%, #DB4967 89.85%)"
+        topPriests[2].backgroundColor =
+          "linear-gradient(198.2deg, #7E58F5 1.54%, #6A36F4 89.85%)"
+
+        const lowerPriests = priestList.filter(
+          item => item.hatID !== 72 && item.hatID !== 73 && item.hatID !== 79
+        )
+
+        setState({
+          ...state,
+          topPriests,
+          lowerPriests,
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   useEffect(() => {
-    updateStats()
+    try {
+      loadDetails()
+    } catch (e) {
+      console.log(e)
+    }
   }, [])
+
+  const cardMap = state.topPriests.map(item => {
+    return (
+      <Card backgroundColor={item.backgroundColor}>
+        <CardInfo>
+          <Avatar
+            style={{
+              backgroundImage: `url(${require(`../../images/${item.avatar}`)})`,
+            }}
+          />
+          <CardTitle>{item.name}</CardTitle>
+          <CardDetails>
+            <CardDetail>
+              <h4>Followers</h4>
+              <h3> {item.followers} </h3>
+            </CardDetail>
+            <CardDetail>
+              <h4>Active DAI</h4>
+              <h3>{item.activeDAI} </h3>
+            </CardDetail>
+          </CardDetails>
+        </CardInfo>
+        <Button>Join the flock</Button>
+      </Card>
+    )
+  })
+
+  const smallCardMap = state.lowerPriests.map(item => {
+    return (
+      <SmallCard>
+        <CardInfo>
+          <SmallAvatar
+            style={{
+              backgroundImage: `url(${require("../../images/" + item.avatar)})`,
+            }}
+          />
+          <SmallCardTitle>{item.name}</SmallCardTitle>
+          <CardDetails>
+            <SmallCardDetail>
+              <h4>Followers</h4>
+              <h3> {item.followers} </h3>
+            </SmallCardDetail>
+            <SmallCardDetail>
+              <h4>Active DAI</h4>
+              <h3>{item.activeDAI} </h3>
+            </SmallCardDetail>
+          </CardDetails>
+        </CardInfo>
+      </SmallCard>
+    )
+  })
 
   return (
     <Container>
