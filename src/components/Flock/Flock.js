@@ -276,12 +276,6 @@ const Flock = () => {
         const daiCompoundAddress = "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643"
         const res = await axios.get(`${COMPOUND_URL}${daiCompoundAddress}`)
         compoundRate = res.data.cToken[0].supply_rate.value
-        // const compoundRateFormatted = Math.round(compoundRate * 10000) / 100;
-        // return {
-        //   compoundRate,
-        //   compoundRateFormatted
-        // };
-
         setState({
           ...state,
           hatID,
@@ -307,7 +301,6 @@ const Flock = () => {
   }, [])
 
   const granteeList = state.loadedHighPriest.projects.map(id => {
-    console.log(state.compoundRate)
     return (
       <Grantee>
         <h4>{projectList.find(item => item.id === id).name}</h4>
