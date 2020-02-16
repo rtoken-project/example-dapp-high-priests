@@ -105,7 +105,7 @@ const SmallCardContainer = styled.div`
 `
 
 const Card = styled.div`
-  margin: 10px;
+  margin: 40px 10px;
   width: 310px;
   background: white;
   border-radius: 1em;
@@ -116,6 +116,21 @@ const Card = styled.div`
   justify-content: space-between;
   min-height: 400px;
   background: ${props => props.backgroundColor};
+  transition: 2.5s;
+
+  &:nth-of-type(1) {
+    text-shadow: 1px 0px #ccc;
+    margin: ${({ isLeaderboard }) => {
+      if (!isLeaderboard) return "40px 10px"
+      return "60px 10px 10px 10px"
+    }};
+  }
+  &:nth-of-type(2) {
+    margin: ${({ isLeaderboard }) => {
+      if (!isLeaderboard) return "40px 10px"
+      return "10px 10px 60px 10px"
+    }};
+  }
 `
 
 const SmallCard = styled.div`
@@ -159,7 +174,7 @@ const CardDetail = styled.div`
   padding: 12px 0px;
   h3 {
     font-family: "roobert_medium", sans-serif;
-    font-size: 16px;
+    font-size: 22px;
     opacity: 1;
     margin-bottom: 3px;
     text-align: left;
@@ -197,14 +212,14 @@ const LogoList = styled.ul`
 const SmallCardDetail = styled.div`
   padding-right: 15px;
   font-family: "roobert_medium", sans-serif !important;
-
+  margin: 15px 0;
   &:last-child {
     padding-right: 0;
   }
 
   h3 {
     font-family: "roobert_medium", sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     opacity: 1;
     margin-bottom: 0;
     text-align: left;
@@ -218,7 +233,10 @@ const SmallCardDetail = styled.div`
     text-align: left;
   }
 `
-
+const AvatarContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
 const Avatar = styled.div`
   width: 100px;
   height: 100px;
@@ -226,7 +244,38 @@ const Avatar = styled.div`
   border-radius: 100%;
   background-size: cover;
 `
+const Position = styled.div`
+  font-size: 3.2em;
+  margin-top: 20px;
+  margin-right: 5px;
+  color: white;
+  font-family: "roobert_medium", sans-serif;
+  transition: 2s;
+  opacity: ${({ show }) => (!show ? 0 : 1)};
+  position: relative;
 
+  div {
+    position: absolute;
+    display: none;
+    top: -50%;
+    right: 0%;
+    transform: translate(50% 50%);
+    width: 200px;
+    height: 200px;
+  }
+
+  &:hover div {
+    display: ${({ showMeme }) => (showMeme ? "block" : "none")};
+  }
+
+  div span {
+    position: relative;
+    bottom: 50px;
+    font-size: 18px;
+    text-shadow: 1px 1px black;
+    font-weight: 600;
+  }
+`
 const SmallAvatar = styled.div`
   width: 60px;
   height: 60px;
@@ -247,6 +296,7 @@ const TextLink = styled(Link)`
   color: #ad90ff;
   font-weight: 800;
   font-size: 0.8em;
+  font-family: "roobert_bold", sans-serif;
   text-align: left;
 `
 const Button = styled(Link)`
@@ -356,7 +406,6 @@ const MainPage = () => {
   }, [])
 
   function setLeaderboard(value) {
-    console.log(state.localPriestList)
     const { localPriestList } = state
     if (value) {
       localPriestList.sort(
@@ -365,10 +414,8 @@ const MainPage = () => {
     } else {
       localPriestList.sort((a, b) => a.hatID - b.hatID)
     }
-    console.log(localPriestList)
-    const topPriests = localPriestList.slice(0, 3)
-
-    console.log("topPriests: ", topPriests)
+    const topPriestsOld = localPriestList.slice(0, 3)
+    const topPriests = [topPriestsOld[2], topPriestsOld[0], topPriestsOld[1]]
     topPriests[0].backgroundColor =
       "linear-gradient(198.2deg, #FFD765 1.54%, #F7C444 89.85%)"
     topPriests[1].backgroundColor =
@@ -387,25 +434,21 @@ const MainPage = () => {
   }
 
   const CardDetailsView = ({ item }) => {
-    console.log(" Item in CardDetailsView is: ", item)
     if (state.isLeaderboard) {
       return (
         <StatList>
           <CardDetail>
-            <h4>Followers</h4>
-            <h3> {item.followerCount} </h3>
+            <h4>Coffers</h4>
+            <h3>{item.totalDAI.toFixed(0)} DAI</h3>
           </CardDetail>
           <CardDetail>
-            <h4>Active DAI</h4>
-            <h3>{item.totalDAI.toFixed(2)} </h3>
+            <h4>Followers</h4>
+            <h3> {item.followerCount} </h3>
           </CardDetail>
         </StatList>
       )
     }
     const { projects } = item
-    console.log("projectList: ", projectList)
-    console.log("projects: ", projects)
-    console.log("projectList[item[0]]", projectList[projects[0]])
     return (
       <LogoList>
         <li>
@@ -428,12 +471,12 @@ const MainPage = () => {
       return (
         <CardDetails>
           <SmallCardDetail>
-            <h4>Followers</h4>
-            <h3> {item.followerCount} </h3>
+            <h4>Coffers</h4>
+            <h3>{item.totalDAI.toFixed(0)} DAI</h3>
           </SmallCardDetail>
           <SmallCardDetail>
-            <h4>Active DAI</h4>
-            <h3>{item.totalDAI.toFixed(2)} </h3>
+            <h4>Followers</h4>
+            <h3> {item.followerCount} </h3>
           </SmallCardDetail>
         </CardDetails>
       )
@@ -442,23 +485,37 @@ const MainPage = () => {
     return (
       <ProjectList>
         <span>
-          {projectList[projects[0]].name} {"  "}
+          {projectList[projects[0]].name}
+          <br />
           {projectList[projects[1]].name}
-          {"  "}
+          <br />
           {projectList[projects[2]].name}
         </span>
       </ProjectList>
     )
   }
-  const cardMap = state.topPriests.map(item => {
+  const cardMap = state.topPriests.map((item, index) => {
     return (
-      <Card backgroundColor={item.backgroundColor}>
+      <Card
+        backgroundColor={item.backgroundColor}
+        position={index || 3}
+        isLeaderboard={state.isLeaderboard}
+      >
         <CardInfo>
-          <Avatar
-            style={{
-              backgroundImage: `url(${require(`../../images/${item.avatar}`)})`,
-            }}
-          />
+          <AvatarContainer>
+            <Avatar
+              style={{
+                backgroundImage: `url(${require(`../../images/${item.avatar}`)})`,
+              }}
+            />
+            <Position show={state.isLeaderboard} showMeme={index === 1}>
+              #{index || 3}
+              <div>
+                <img src={require(`../../images/vitalik.gif`)} />
+                <span>Vitalik is impress</span>
+              </div>
+            </Position>
+          </AvatarContainer>
           <CardTitle>{item.name}</CardTitle>
           <CardDetailsView item={item}></CardDetailsView>
         </CardInfo>
