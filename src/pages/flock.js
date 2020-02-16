@@ -34,11 +34,7 @@ const LoadableFlock = Loadable({
 const GrovePage = () => {
   return (
     <Layout>
-      <SEO
-        title="My Flock"
-        description="Check out my flock here."
-        image="https://imgur.com/ldBwSph.png"
-      />
+      <SEO title="Flock" />
       <LoadableFlock />
     </Layout>
   )
