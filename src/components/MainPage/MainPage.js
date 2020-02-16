@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
-import { priestList, priestListOutside } from "../../data"
+import { priestList } from "../../data"
 import "../fonts.css"
 
 const H1 = styled.h1`

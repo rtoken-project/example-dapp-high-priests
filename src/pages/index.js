@@ -7,7 +7,7 @@ import BackgroundScene from "../components/BackgroundScene/BackgroundScene"
 const IndexPage = () => {
   return (
     <Layout>
-      <SEO title="Plant" />
+      <SEO title="Join" />
       <BackgroundScene />
       <MainPage />
     </Layout>

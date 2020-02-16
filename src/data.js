@@ -133,34 +133,3 @@ export const priestList = [
     hatID: 80,
   },
 ]
-
-export const priestListOutside = [
-  {
-    name: "Kevin Owocki",
-    avatar: "kevin.png",
-    followers: "18",
-    activeDAI: "200.loading / 0.001",
-    projects: ["rdai", "tornado", "moloch"],
-  },
-  {
-    name: "Meta Cartel",
-    avatar: "metacartel.png",
-    followers: "loading",
-    activeDAI: "loading",
-    projects: ["rdai", "tornado", "moloch"],
-  },
-  {
-    name: "Kevin Owocki",
-    avatar: "andrew.png",
-    followers: "loading",
-    activeDAI: "loading",
-    projects: ["rdai", "tornado", "moloch"],
-  },
-  {
-    name: "Kevin Owocki",
-    avatar: "andrew.png",
-    followers: "loading",
-    activeDAI: "loading",
-    projects: ["rdai", "tornado", "moloch"],
-  },
-]

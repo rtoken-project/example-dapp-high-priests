@@ -18,7 +18,7 @@ const Background = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #faebe0;
+  background-color: #121427;
 `
 
 const H1 = styled.h1`
@@ -31,7 +31,7 @@ const H1 = styled.h1`
   text-align: center;
   max-width: 700px;
   margin: 0 auto;
-  color: #0a1a5d;
+  color: white;
   padding-top: 120px;
 
   @media (max-width: 500px) {
@@ -50,7 +50,7 @@ const P = styled.p`
   line-height: 1.3;
   opacity: 0.7;
   text-align: center;
-  color: #0a1a5d;
+  color: white;
   @media (max-width: 500px) {
     font-size: 18px;
   }
@@ -62,8 +62,8 @@ const StopPage = () => (
 
     <CenteredContainer>
       <div>
-        <H1>Farewell, tree friend</H1>
-        <P>We hate to see you leave 🍃 Thanks for planting trees!</P>
+        <H1>Farewell, devoted follower</H1>
+        <P>Thanks for donating!</P>
         <RedeemTokens />
       </div>
     </CenteredContainer>
