@@ -63,9 +63,8 @@ const Button = styled.div`
   }
 `
 const FollowerButton = styled.div`
-  margin-top: 20px;
+  margin: 25px 10px 0px 10px;
   font-family: "roobert_bold", sans-serif;
-  width: 100%;
   display: block;
   font-size: 16px;
   background-color: #ffd663;
@@ -76,7 +75,6 @@ const FollowerButton = styled.div`
   align-items: center;
   border-radius: 12px;
   transition: all 0.2s ease;
-
   box-shadow: 0px 12px 25px -10px rgba(18, 20, 39, 0.4);
 
   :hover {
@@ -164,9 +162,8 @@ export const InitialFollower = ({
   return (
     <FollowerContainer>
       <h3>You are in the Flock</h3>
-      <p>You've generated</p>
-      <h4>{amountGenerated} DAI</h4>
-      <p>{amountActive} DAI is Active</p>
+      <p>Your offering:</p>
+      <h4>{Number(amountActive).toFixed(0)} DAI</h4>
       <FollowerButton onClick={() => onSubmit(amountDAI)}>
         Boost your offering
       </FollowerButton>

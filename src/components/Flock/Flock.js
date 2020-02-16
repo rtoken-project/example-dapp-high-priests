@@ -244,6 +244,7 @@ const Flock = () => {
         })
         const web3Utils = new Web3Utils()
         let isFollower = false
+        let amountActive = 0
         if (web3Utils.isWeb3EnabledBrowser()) {
           const {
             hasWallet,
@@ -252,13 +253,6 @@ const Flock = () => {
             error,
           } = await web3Utils.unlockWallet()
           if (error || !hasWallet) {
-            // Case: No wallet
-            // setState({
-            //   ...state,
-            //   growerAddress: "",
-            //   numTreesGrown: 0,
-            //   status: "error",
-            // })
             return
           }
           const { data } = await axios.get(
@@ -266,6 +260,11 @@ const Flock = () => {
           )
           const { hatID: userHatID } = data
           isFollower = userHatID === hatID
+          const user = sortedFollowers.find(
+            element => element.id.toLowerCase() === walletAddress.toLowerCase()
+          )
+          amountActive = user.balance
+          console.log(user.balance)
         }
         setState({
           ...state,
@@ -273,6 +272,7 @@ const Flock = () => {
           totalDAI,
           sortedFollowers,
           isFollower,
+          amountActive,
           loadedHighPriest: priest,
         })
       }
@@ -368,6 +368,7 @@ const Flock = () => {
             firstName={state.loadedHighPriest.firstName}
             isFollower={state.isFollower}
             hatID={state.hatID}
+            amountActive={state.amountActive}
           />
         </RightSide>
       </Grid>
