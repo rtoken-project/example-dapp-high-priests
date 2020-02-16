@@ -10,7 +10,6 @@ const rotate = keyframes`
 `
 
 const LoaderContainer = styled.div`
-  padding-top: 40px;
   img {
     animation: ${rotate} 2s linear infinite;
     padding: 20px;

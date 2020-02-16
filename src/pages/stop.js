@@ -62,7 +62,7 @@ const StopPage = () => (
 
     <CenteredContainer>
       <div>
-        <H1>Farewell, devoted follower</H1>
+        <H1>Farewell, devoted member of the flock</H1>
         <P>Thanks for donating!</P>
         <RedeemDappy />
       </div>
