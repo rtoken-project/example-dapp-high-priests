@@ -3,6 +3,8 @@ import styled from "styled-components"
 import { Link } from "gatsby"
 import { priestList } from "../../data"
 import "../fonts.css"
+const API_URL = "https://api.rdai.money"
+import axios from "axios"
 
 const H1 = styled.h1`
   font-family: "roobert_bold", sans-serif;
@@ -174,7 +176,7 @@ const SmallAvatar = styled.div`
   background-size: cover;
 `
 
-const Button = styled.div`
+const Button = styled(Link)`
   font-family: "roobert_bold", sans-serif;
   width: 100%;
   display: block;
@@ -187,7 +189,8 @@ const Button = styled.div`
   border-radius: 12px;
   background-color: white;
   transition: all 0.2s ease;
-
+  text-decoration: none;
+  color: #000;
   box-shadow: 0px 12px 25px -10px rgba(18, 20, 39, 0.4);
 
   :hover {
@@ -225,26 +228,25 @@ const MainPage = () => {
     // check URL for priest hat ID
     try {
       if (typeof window !== "undefined") {
-        /*
-        const queryString = window.location.search
-        const urlParams = new URLSearchParams(queryString)
-        const hatID = urlParams.get("hatID")
-        const priest = priestList.find(element => {
-          return element.hatID.toString() === hatID.toString()
-        })
         // load stuff
-        const url = `${API_URL}/v1/allUsersWithHat/?hatID=${hatID}`
-        console.log(url)
-        const { data } = await axios.get(url)
-        let totalDAI = 0
-        if (typeof data !== "undefined") {
-          totalDAI = data.accounts.reduce((a, b) => a + Number(b.balance), 0)
-        }
-        const sortedFollowers = data.accounts.sort((a, b) => {
-          return b.balance - a.balance
-        })*/
+        const hats = priestList.map(item => item.hatID)
+        const localPriestList = [...priestList]
+        hats.forEach(async (hatID, i) => {
+          const url = `${API_URL}/v1/allUsersWithHat/?hatID=${hatID}`
+          const { data } = await axios.get(url)
+          let totalDAI = 0
+          let followerCount = 0
+          if (typeof data !== "undefined") {
+            totalDAI = data.accounts.reduce((a, b) => a + Number(b.balance), 0)
+            followerCount = data.accounts.reduce((a, b) => a++, 0)
+          }
+          localPriestList.find(item => item.hatID === hatID).totalDAI = totalDAI
+          localPriestList.find(
+            item => item.hatID === hatID
+          ).followerCount = followerCount
+        })
 
-        const topPriests = priestList.filter(
+        const topPriests = localPriestList.filter(
           item => item.hatID === 72 || item.hatID === 73 || item.hatID === 79
         )
         topPriests[0].backgroundColor =
@@ -254,7 +256,7 @@ const MainPage = () => {
         topPriests[2].backgroundColor =
           "linear-gradient(198.2deg, #7E58F5 1.54%, #6A36F4 89.85%)"
 
-        const lowerPriests = priestList.filter(
+        const lowerPriests = localPriestList.filter(
           item => item.hatID !== 72 && item.hatID !== 73 && item.hatID !== 79
         )
 
@@ -290,15 +292,15 @@ const MainPage = () => {
           <CardDetails>
             <CardDetail>
               <h4>Followers</h4>
-              <h3> {item.followers} </h3>
+              <h3> {item.followerCount} </h3>
             </CardDetail>
             <CardDetail>
               <h4>Active DAI</h4>
-              <h3>{item.activeDAI} </h3>
+              <h3>{item.totalDAI} </h3>
             </CardDetail>
           </CardDetails>
         </CardInfo>
-        <Button>Join the flock</Button>
+        <Button to={`/flock/?hatID=${item.hatID}`}>Join the flock</Button>
       </Card>
     )
   })
@@ -316,11 +318,11 @@ const MainPage = () => {
           <CardDetails>
             <SmallCardDetail>
               <h4>Followers</h4>
-              <h3> {item.followers} </h3>
+              <h3> {item.followerCount} </h3>
             </SmallCardDetail>
             <SmallCardDetail>
               <h4>Active DAI</h4>
-              <h3>{item.activeDAI} </h3>
+              <h3>{item.totalDAI} </h3>
             </SmallCardDetail>
           </CardDetails>
         </CardInfo>

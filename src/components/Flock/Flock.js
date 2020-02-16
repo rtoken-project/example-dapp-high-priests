@@ -268,17 +268,15 @@ const Flock = () => {
 
   const granteeList = state.loadedHighPriest.projects.map(id => {
     return (
-      <div>
-        <Grantee>
-          <h4>{projectList.find(item => item.id === id).name}</h4>
-          <AquiredDai>
-            <p>Estimated funding</p>
-            <h5>
-              {((state.totalDAI * compoundRate) / 3).toFixed(2)} DAI per year
-            </h5>
-          </AquiredDai>
-        </Grantee>
-      </div>
+      <Grantee>
+        <h4>{projectList.find(item => item.id === id).name}</h4>
+        <AquiredDai>
+          <p>Coffer allocation</p>
+          <h5>
+            {((state.totalDAI * 0.95 * compoundRate) / 3).toFixed(2)} DAI a year
+          </h5>
+        </AquiredDai>
+      </Grantee>
     )
   })
   const sortedFollowerList = state.sortedFollowers.map(item => {
@@ -319,7 +317,7 @@ const Flock = () => {
                 <ActiveDAI>
                   <h3>{state.totalDAI.toFixed(0)} DAI</h3>
                   <h4>
-                    {(state.totalDAI * compoundRate).toFixed(2)} DAI per year
+                    {(state.totalDAI * compoundRate).toFixed(2)} DAI a year
                   </h4>
                 </ActiveDAI>
               </Stats>
