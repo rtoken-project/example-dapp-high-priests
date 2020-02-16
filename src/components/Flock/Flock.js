@@ -10,8 +10,8 @@ import axios from "axios"
 const API_URL = "https://api.rdai.money"
 import hat from "../../images/hat.svg"
 import ethers from "ethers"
-import DappyModule from "./DappyModule"
 import Web3Utils from "./Web3/Web3Utils"
+import Loadable from "react-loadable"
 
 const Loading = props => {
   if (props.error) {
@@ -243,7 +243,7 @@ const Flock = () => {
           return b.balance - a.balance
         })
         const web3Utils = new Web3Utils()
-
+        let isFollower = false
         if (web3Utils.isWeb3EnabledBrowser()) {
           const {
             hasWallet,
@@ -265,13 +265,14 @@ const Flock = () => {
             `${API_URL}/v1/getHatIDByAddress?owner=${walletAddress}`
           )
           const { hatID: userHatID } = data
-          console.log(userHatID)
+          isFollower = userHatID === hatID
         }
         setState({
           ...state,
           hatID,
           totalDAI,
           sortedFollowers,
+          isFollower,
           loadedHighPriest: priest,
         })
       }
@@ -290,7 +291,7 @@ const Flock = () => {
 
   const granteeList = state.loadedHighPriest.projects.map(id => {
     return (
-      <Grantee>
+      <Grantee key={id}>
         <h4>{projectList.find(item => item.id === id).name}</h4>
         <AquiredDai>
           <p>Coffer allocation</p>
@@ -303,7 +304,7 @@ const Flock = () => {
   })
   const sortedFollowerList = state.sortedFollowers.map(item => {
     return (
-      <LI>
+      <LI key={item.id}>
         <h4>{item.id}</h4>
         <p>{item.balance} DAI</p>
       </LI>
@@ -327,6 +328,34 @@ const Flock = () => {
       console.log(e)
     }
   }, [])
+
+  const Loading = props => {
+    if (props.error) {
+      return (
+        <div>
+          Error! <button onClick={() => location.reload()}>Retry</button>
+        </div>
+      )
+    } else if (props.pastDelay) {
+      return <div></div>
+    } else if (props.timedOut) {
+      return (
+        <div>
+          Taking a long time...{" "}
+          <button onClick={() => location.reload()}>Retry</button>
+        </div>
+      )
+    } else {
+      return null
+    }
+  }
+
+  const LoadableDappyModule = Loadable({
+    loader: () => import("./DappyModule"),
+    loading: Loading,
+    delay: 300, // 0.3 seconds
+    timeout: 10000, // 10 seconds
+  })
 
   return (
     <div>
@@ -363,7 +392,7 @@ const Flock = () => {
         </LeftSide>
 
         <RightSide>
-          <DappyModule
+          <LoadableDappyModule
             firstName={state.loadedHighPriest.firstName}
             isFollower={state.isFollower}
             hatID={state.hatID}
