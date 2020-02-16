@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
+import Web3Utils from "../../Flock/Web3/Web3Utils"
 import Logo from "../../../images/logo.svg"
 
 const StyledButton = styled(Link)`
@@ -71,22 +72,85 @@ const LogoLink = styled(Link)`
     }
   }
 `
+const GithubLink = styled.a`
+  display: flex;
+  align-ttems: center;
+  flex-direction: row;
+  text-decoration: none;
+  h3 {
+    font-family: "roobert_semibold";
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+    padding-left: 30px;
+    margin: 17px 0px;
 
-const Header = () => (
-  <HeaderContainer>
-    <div
-      style={{
-        display: `flex`,
-        alignItems: `center`,
-      }}
-    >
-      <LogoLink to="/">
-        <h3>High Priests</h3>
-      </LogoLink>
-    </div>
+    @media (max-width: 500px) {
+      font-size: 13px;
+    }
+  }
+`
 
-    <StyledButton to="/flock/">Your flock</StyledButton>
-  </HeaderContainer>
-)
+const Header = () => {
+  const [state, setState] = useState({
+    hatID: null,
+  })
+  const loadDetails = async () => {
+    try {
+      const web3Utils = new Web3Utils()
+      if (web3Utils.isWeb3EnabledBrowser()) {
+        let hatID = null
+        const {
+          hasWallet,
+          walletAddress,
+          error,
+        } = await web3Utils.unlockWallet()
+        if (error || !hasWallet) {
+          return
+        }
+        const { data } = await axios.get(
+          `${API_URL}/v1/getHatIDByAddress?owner=${walletAddress}`
+        )
+        const { hatID: userHatID } = data
+        if (userHatID) hatID = userHatID
+        setState({
+          ...state,
+          hatID,
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const ActionButton = () => {
+    if (state.hatID !== null)
+      return <StyledButton onClick={loadDetails}>Load Wallet</StyledButton>
+    return (
+      <StyledButton to={`/flock?hatID=${state.hatID}`}>Your flock</StyledButton>
+    )
+  }
+  return (
+    <HeaderContainer>
+      <div
+        style={{
+          display: `flex`,
+          alignItems: `center`,
+        }}
+      >
+        <LogoLink to="/">
+          <h3>High Priests</h3>
+        </LogoLink>
+        <GithubLink
+          target="_blank"
+          href="https://github.com/rtoken-project/example-dapp-high-priests"
+        >
+          <h3>Github</h3>
+        </GithubLink>
+      </div>
+
+      <ActionButton />
+    </HeaderContainer>
+  )
+}
 
 export default Header
