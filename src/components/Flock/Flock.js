@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import Tribute from "tribute-utils"
 import RTokenAnalytics from "rtoken-analytics"
-let CryptoJS = require("crypto-js")
 import { navigate } from "gatsby"
 import { Context } from "../context"
 import { priestList, projectList } from "../../data"
@@ -12,6 +11,7 @@ const API_URL = "https://api.rdai.money"
 import hat from "../../images/hat.svg"
 import ethers from "ethers"
 import DappyModule from "./DappyModule"
+import Web3Utils from "./Web3/Web3Utils"
 
 const Loading = props => {
   if (props.error) {
@@ -244,7 +244,24 @@ const Flock = () => {
         const sortedFollowers = data.accounts.sort((a, b) => {
           return b.balance - a.balance
         })
-
+        if (web3Utils.isBrowser()) {
+          const {
+            hasWallet,
+            walletAddress,
+            network,
+            error,
+          } = await web3Utils.unlockWallet()
+          if (error || !hasWallet) {
+            // Case: No wallet
+            // setState({
+            //   ...state,
+            //   growerAddress: "",
+            //   numTreesGrown: 0,
+            //   status: "error",
+            // })
+            return
+          }
+        }
         setState({
           ...state,
           hatID,
@@ -297,6 +314,16 @@ const Flock = () => {
       </FollowersEmpty>
     )
   }
+
+  const web3Utils = new Web3Utils()
+
+  useEffect(() => {
+    try {
+      loadDetails()
+    } catch (e) {
+      console.log(e)
+    }
+  }, [])
 
   return (
     <div>
