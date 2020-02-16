@@ -219,9 +219,10 @@ const Flock = () => {
     totalDAI: 0,
     isFollower: false,
     sortedFollowers: [],
+    compoundRate: 0
   })
 
-  const compoundRate = 0.075
+
   const loadDetails = async () => {
     // check URL for priest hat ID
     try {
@@ -264,6 +265,16 @@ const Flock = () => {
             element => element.id.toLowerCase() === walletAddress.toLowerCase()
           )
           if (user && user.balance) amountActive = user.balance
+          const COMPOUND_URL = 'https://api.compound.finance/api/v2/ctoken?addresses[]=';
+          const daiCompoundAddress = '0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643';
+            const res = await axios.get(`${COMPOUND_URL}${daiCompoundAddress}`);
+            compoundRate = res.data.cToken[0].supply_rate.value;
+            // const compoundRateFormatted = Math.round(compoundRate * 10000) / 100;
+            // return {
+            //   compoundRate,
+            //   compoundRateFormatted
+            // };
+          };
         }
         setState({
           ...state,
@@ -272,6 +283,7 @@ const Flock = () => {
           sortedFollowers,
           isFollower,
           amountActive,
+          compoundRate,
           loadedHighPriest: priest,
         })
       }
@@ -289,13 +301,15 @@ const Flock = () => {
   }, [])
 
   const granteeList = state.loadedHighPriest.projects.map(id => {
+    console.log(state.compoundRate);
     return (
       <Grantee key={id}>
         <h4>{projectList.find(item => item.id === id).name}</h4>
         <AquiredDai>
-          <p>Coffer allocation</p>
+          <p>Coffers allocating</p>
           <h5>
-            {((state.totalDAI * 0.95 * compoundRate) / 3).toFixed(2)} DAI a year
+            {((state.totalDAI * 0.95 * state.compoundRate) / 3).toFixed(2)} DAI per
+            year
           </h5>
         </AquiredDai>
       </Grantee>
@@ -343,11 +357,11 @@ const Flock = () => {
 
             <div>
               <Stats>
-                <h5>Designating</h5>
+                <h5>Coffers</h5>
                 <ActiveDAI>
                   <h3>{state.totalDAI.toFixed(0)} DAI</h3>
                   <h4>
-                    {(state.totalDAI * compoundRate).toFixed(2)} DAI a year
+                    {(state.totalDAI * state.compoundRate).toFixed(2)} DAI per year
                   </h4>
                 </ActiveDAI>
               </Stats>

@@ -5,7 +5,7 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: `High Priests`,
-    description: `Mystical social donation app.`,
+    description: `Spendless social giving to sustain Web3`,
     author: `@pi0neerpat, @patrykadas, @FrancescoRenziA, @twoirtter`,
     siteURL: "https://highpriests.rdai.money",
   },

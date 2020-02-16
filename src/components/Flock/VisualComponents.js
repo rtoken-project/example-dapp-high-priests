@@ -144,11 +144,11 @@ export const InitialNonFollower = ({ onSubmit, firstName, amountDAI }) => {
       <img src={hat} />
       <h3>Join {firstName}'s flock</h3>
       <p>
-        Make a spendless offering to the open source projects {firstName}{" "}
-        supports using the interest your DAI generates.
+        Make a spendless offering to {firstName}'s recipients using the interest
+        your DAI generates.
       </p>
       <Button onClick={() => onSubmit(amountDAI)}>
-        Activate 40 DAI to Enter
+        Activate 40 DAI to join
       </Button>
     </InitialContainer>
   )

@@ -81,7 +81,7 @@ const Header = () => (
       }}
     >
       <LogoLink to="/">
-        <h3>High Priest</h3>
+        <h3>High Priests</h3>
       </LogoLink>
     </div>
 
