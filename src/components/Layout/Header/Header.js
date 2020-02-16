@@ -8,7 +8,7 @@ const StyledButton = styled(Link)`
   font-size: 15px;
   color: white;
   text-decoration: none;
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 50px;
   height: 50px;
   padding: 12px 24px 10px 24px;
@@ -72,7 +72,6 @@ const LogoLink = styled(Link)`
   }
 `
 
-
 const Header = () => (
   <HeaderContainer>
     <div
@@ -86,7 +85,7 @@ const Header = () => (
       </LogoLink>
     </div>
 
-    <StyledButton to="/flock/">Your flocks</StyledButton>
+    <StyledButton to="/flock/">Your flock</StyledButton>
   </HeaderContainer>
 )
 
