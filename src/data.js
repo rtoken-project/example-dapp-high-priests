@@ -1,11 +1,11 @@
 export const projectList = [
-  { id: 0, name: "Gitcoin Sustainability Fund", url: "https://gitcoin.co" },
+  { id: 0, name: "Gitcoin Fund", url: "https://gitcoin.co" },
   { id: 1, name: "Ethers.js", url: "https://github.com/ethers-io/ethers.js" },
   { id: 2, name: "Dune Analytics", url: "https://www.duneanalytics.com" },
   { id: 3, name: "Tornado.Cash", url: "https://tornado.cash" },
   {
     id: 4,
-    name: "Burner Factory",
+    name: "Burner Wallet",
     url: "https://github.com/dmihal/burner-wallet-2",
   },
   { id: 5, name: "Abridged", url: "https://www.abridged.io/" },
