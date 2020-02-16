@@ -578,10 +578,10 @@ const MainPage = () => {
 
   return (
     <Container>
-      <H1>Donate towards causes these people support</H1>
+      <H1>Support Web3 with spendless social giving</H1>
       <P>
-        Donate your generated DAI interest towards projects chosen by community
-        leaders.
+        Donate your generated DAI interest to sustain open source projects
+        chosen by Ethereum community luminaries.
         <br />
         Stop donating at any time.
       </P>
