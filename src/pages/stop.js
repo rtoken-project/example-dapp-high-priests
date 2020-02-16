@@ -62,8 +62,8 @@ const StopPage = () => (
 
     <CenteredContainer>
       <div>
-        <H1>Farewell, tree friend</H1>
-        <P>We hate to see you leave 🍃 Thanks for planting trees!</P>
+        <H1>Farewell, devoted follower</H1>
+        <P>Thanks for donating!</P>
         <RedeemTokens />
       </div>
     </CenteredContainer>
