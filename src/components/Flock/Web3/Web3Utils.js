@@ -11,6 +11,7 @@ class Web3Utils {
     }
     let walletAddress = ""
     try {
+      window.ethereum.autoRefreshOnNetworkChange = false
       walletAddress = await window.ethereum.enable()
       localStorage.setItem("walletAddress", walletAddress[0])
 
