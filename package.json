@@ -1,7 +1,7 @@
 {
-  "name": "rtrees-dapp",
-  "private": true,
-  "description": "Use rDAI to plant trees.",
+  "name": "high-priests",
+  "private": false,
+  "description": "Mystical social donation app.",
   "version": "0.1.0",
   "dependencies": {
     "@status-im/subspace": "^1.1.0",
@@ -39,6 +39,7 @@
     "rtoken-analytics": "^0.0.9",
     "styled-components": "^4.4.1",
     "tribute-utils": "^0.0.6",
+    "walletlink": "^1.0.0",
     "web3": "^1.2.2"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import hat from "../../images/hat.svg"
 import styled from "styled-components"
+import Dappy from "./Dappy"
 
 import { InitialNonFollower } from "./VisualComponents"
 import {
@@ -19,15 +20,13 @@ import {
   TxAbortedVisual,
   InitialVisual,
   WalletPromptView,
-  Swap0xView,
-} from "feather"
+} from "./Feather"
 
-options = {
+const options = {
   id: "supporter",
   // optional
   stepOrder: [
     "initial",
-    "chooseWallet",
     "unlockWallet",
     "loadWallet",
     "preApprove",
@@ -44,7 +43,7 @@ options = {
         initial: {
           visual: InitialNonFollower,
           props: {
-            name: "Supporter",
+            firstName: "",
             amountDAI: 10,
             buttonTextColor: "#CC5521",
             buttonBG: "linear-gradient(180deg, #FFFFFF 0%, #F6D8CB 100%)",
@@ -116,16 +115,6 @@ options = {
       },
       commonVisualProps: {
         size: "large",
-      },
-    },
-    swap0x: {
-      category: "web3",
-      type: "swap-0x",
-      visualComponents: {
-        swap0x: {
-          visual: Swap0xView,
-          props: {},
-        },
       },
     },
     preApprove: {
@@ -244,9 +233,18 @@ const onToggleActive = id => {
   console.log(`Dappy ${id} is active`)
 }
 
-const DappyModule = ({ isFollower }) => {
+const DappyModule = ({ isFollower, firstName }) => {
+  options.stepDetails.initial.visualComponents.initial.props.firstName = firstName
   if (isFollower) return <>Follower</>
-  return <></>
+  return (
+    <>
+      <Dappy
+        options={options}
+        onToggleActive={onToggleActive}
+        infuraKey={process.env.REACT_APP_INFURA_ENDPOINT_KEY}
+      />
+    </>
+  )
 }
 
 export default DappyModule

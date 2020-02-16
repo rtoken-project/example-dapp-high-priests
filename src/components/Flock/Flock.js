@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import Tribute from "tribute-utils"
-import Loadable from "react-loadable"
 import RTokenAnalytics from "rtoken-analytics"
 let CryptoJS = require("crypto-js")
 import { navigate } from "gatsby"
@@ -212,42 +211,11 @@ const Followers = styled.div`
   }
 `
 
-const Button = styled.div`
-  font-family: "roobert_bold", sans-serif;
-  width: 100%;
-  display: block;
-  font-size: 16px;
-  background-color: red;
-  height: 54px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  background-color: white;
-  transition: all 0.2s ease;
-
-  box-shadow: 0px 12px 25px -10px rgba(18, 20, 39, 0.4);
-
-  :hover {
-    cursor: pointer;
-    transform: translateY(-3px);
-    transition: all 0.2s ease;
-    box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
-  }
-
-  :active {
-    cursor: pointer;
-    transform: scale(0.98);
-    transition: all 0.2s ease;
-    box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
-  }
-`
-
 const Flock = () => {
   const [context, setContext] = useContext(Context)
 
   const [state, setState] = useState({
-    loadedHighPriest: { projects: [], avatar: "andrew.png" },
+    loadedHighPriest: { projects: [], avatar: "andrew.png", firstName: "" },
     hatID: 72,
     totalDAI: 0,
     isFollower: false,
@@ -367,7 +335,10 @@ const Flock = () => {
         </LeftSide>
 
         <RightSide>
-          <DappyModule isFollower={state.isFollower} />
+          <DappyModule
+            firstName={state.loadedHighPriest.firstName}
+            isFollower={state.isFollower}
+          />
         </RightSide>
       </Grid>
       <BackgroundColor></BackgroundColor>

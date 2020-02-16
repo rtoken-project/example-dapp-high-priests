@@ -18,6 +18,11 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
           },
         ],
       },
+      resolve: {
+        alias: {
+          react: path.resolve(__dirname, "./node_modules/react"),
+        },
+      },
     })
   }
 }
