@@ -10,7 +10,7 @@ import axios from "axios"
 const API_URL = "https://api.rdai.money"
 import hat from "../../images/hat.svg"
 import ethers from "ethers"
-// import DappyModule from "./DappyModule"
+import DappyModule from "./DappyModule"
 import Web3Utils from "./Web3/Web3Utils"
 import Loader from "./Loader"
 
