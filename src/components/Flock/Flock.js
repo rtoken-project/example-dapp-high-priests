@@ -246,6 +246,7 @@ const Flock = () => {
           const { image, name } = profile
           if (name) sortedFollowers[index].name = name
           if (image) {
+            console.log(image[0].contentUrl["/"])
             sortedFollowers[index].image = image[0].contentUrl["/"]
           }
         }
@@ -317,7 +318,9 @@ const Flock = () => {
     console.log(item.image)
     return (
       <LI key={item.id}>
-        {item.image && <img src={`https://ipfs.io/ipfs/${item.image}}`} />}
+        {item.image && (
+          <img src={"https://ipfs.io/ipfs/" + item.image} width={50} />
+        )}
         <h4>{item.name || item.id}</h4>
         <p>{Number(item.balance).toFixed(2)} DAI</p>
       </LI>
