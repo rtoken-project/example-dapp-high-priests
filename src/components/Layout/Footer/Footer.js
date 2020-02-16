@@ -11,21 +11,6 @@ const StyledLink = styled.a`
   transition: all 0.2s ease;
   position: relative;
 
-  &:last-child {
-    margin-left: 40px;
-    position: relative;
-
-    &::before {
-      content: "";
-      position: absolute;
-      margin-left: -20px;
-      width: 1px;
-      height: 16px;
-      top: 4px;
-      opacity: 0.3;
-      background-color: white;
-    }
-  }
 
   &:hover {
     transform: scale(1.03);
@@ -57,13 +42,6 @@ const Footer = () => (
       rel="noopener noreferrer"
     >
       Made with rDAI
-    </StyledLink>
-    <StyledLink
-      href="https://gitcoin.co/grants/250/rdai-2"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Support us
     </StyledLink>
   </FooterContainer>
 )

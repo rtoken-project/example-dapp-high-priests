@@ -6,9 +6,9 @@ import Logo from "../../../images/logo.svg"
 const StyledButton = styled(Link)`
   font-family: "roobert_semibold";
   font-size: 15px;
-  color: #0a1a5d;
+  color: white;
   text-decoration: none;
-  border: 1px solid #d6b094;
+  border: 1px solid rgba(255,255,255,0.4);
   border-radius: 50px;
   height: 50px;
   padding: 12px 24px 10px 24px;
@@ -33,7 +33,7 @@ const StyledButton = styled(Link)`
 `
 
 const HeaderContainer = styled.div`
-  background: transparent;
+  background: #121427;
   position: relative;
   padding: 30px;
   display: flex;
@@ -61,7 +61,7 @@ const LogoLink = styled(Link)`
   h3 {
     font-family: "roobert_semibold";
     font-size: 16px;
-    color: #0a1a5d;
+    color: white;
     text-decoration: none;
     padding-left: 12px;
     margin: 17px 0px;
@@ -72,40 +72,6 @@ const LogoLink = styled(Link)`
   }
 `
 
-const StyledLink = styled(Link)`
-  font-family: "roobert_medium";
-  font-size: 16px;
-  color: #0a1a5d;
-  margin-left: 12px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  padding-top: 4px;
-
-  @media (max-width: 500px) {
-    font-size: 13px;
-    padding-top: 0;
-  }
-
-  &:before {
-    content: "";
-    height: 16px;
-    width: 1px;
-    background-color: #d6b094;
-    display: block;
-    margin-right: 12px;
-    margin-top: 4px;
-  }
-
-  &:hover {
-    transition: border 0.2s ease;
-  }
-
-  &:active {
-    transform: scale(0.97);
-    transition: transform 0.2s ease;
-  }
-`
 
 const Header = () => (
   <HeaderContainer>
@@ -116,13 +82,11 @@ const Header = () => (
       }}
     >
       <LogoLink to="/">
-        <img src={Logo} />
-        <h3>rTrees</h3>
+        <h3>High Priest</h3>
       </LogoLink>
-      <StyledLink to="/about">How it works</StyledLink>
     </div>
 
-    <StyledButton to="/grove">Your grove</StyledButton>
+    <StyledButton to="/flock/">Your flocks</StyledButton>
   </HeaderContainer>
 )
 

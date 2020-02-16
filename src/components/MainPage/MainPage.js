@@ -13,7 +13,7 @@ const H1 = styled.h1`
   text-align: center;
   max-width: 700px;
   margin: 0 auto;
-  color: #0a1a5d;
+  color: white;
 
   @media (max-width: 500px) {
     font-size: 36px;
@@ -28,7 +28,7 @@ const P = styled.p`
   margin: 15px auto 15px;
   line-height: 1.3;
   opacity: 0.7;
-  color: #0a1a5d;
+  color: white;
 
   @media (max-width: 500px) {
     font-size: 18px;
@@ -45,103 +45,290 @@ const Container = styled.section`
   }
 `
 
-const StatsContainer = styled.div`
-  padding: 30px;
-  margin: 0 auto;
-  background-color: white;
-  border-radius: 20px;
-  margin-bottom: 30px;
-  margin-top: 30px;
-`
+
+
 const StarterContainer = styled.div`
   min-height: 367px;
 `
 
-const LearnButton = styled(Link)`
-  font-family: "roobert_semibold", sans-serif;
-  letter-spacing: -0.2px;
-  font-size: 18px;
-  text-decoration: none;
-  margin: 15px auto 0px;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  width: 220px;
-  border-radius: 50px;
-  height: 50px;
-  box-shadow: 0 17px 20px -5px rgba(12, 32, 117, 0.2);
-  transition: all 0.2s ease;
-  background-color: white;
-  color: #0a1a5d;
-  overflow: hidden;
-
-  &:hover {
-    outline: none;
-    cursor: pointer;
-    transform: translateY(-2px);
-    border: 0;
-    box-shadow: 0 17px 20px -5px rgba(12, 32, 117, 0.3);
-    transition: all 0.2s ease;
-  }
-
-  &:active {
-    transform: scale(0.97);
-    transition: transform 0.2s ease;
-  }
-`
 const CardContainer = styled.div`
   display: flex;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
 `
 
+const SmallCardContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+`
+
+
+
 const Card = styled.div`
-  margin: 1.5em;
-  width: 250px;
+  margin: 1em;
+  width: 310px;
   background: white;
   border-radius: 1em;
   box-shadow: 0px 0px 15px #000;
-  padding: 2em;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 400px;
+  background: ${props => props.backgroundColor };
 `
+
+const SmallCard = styled.div`
+  margin: 1em;
+  width: 230px;
+  background: white;
+  border-radius: 1em;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 300px;
+  background: #1F2240;
+`
+
+
 const CardTitle = styled.div`
-  font-size:1.1em;
-  font-weight:600;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 50%;
+  font-family: "roobert_medium", sans-serif;
+  text-align: left;
 `
-const CardText = styled.div`
-  font-size:0.9em;
-  font-weight: 300;
+
+const SmallCardTitle = styled.div`
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 80%;
+  font-family: "roobert_medium", sans-serif;
+  text-align: left;
 `
+
+const CardDetails = styled.div`
+  display: flex; 
+  flex-direction: row;
+  margin-bottom: 20px;
+`
+
+const CardDetail = styled.div`
+
+  padding-right: 30px;
+
+  h3 {
+    font-family: "roobert_medium", sans-serif;
+    font-size: 16px;
+    opacity: 1;
+    margin-bottom: 0;
+    text-align: left;
+  }
+  
+  h4 {
+    font-family: "roobert_medium", sans-serif;
+    font-size: 16px;
+    opacity: 0.7; 
+    margin-bottom: 8px;
+    text-align: left;
+  }
+`
+
+
+const SmallCardDetail = styled.div`
+
+  padding-right: 15px;
+
+  &:last-child {
+    padding-right: 0;
+  }
+
+  h3 {
+    font-family: "roobert_medium", sans-serif;
+    font-size: 14px;
+    opacity: 1;
+    margin-bottom: 0;
+    text-align: left;
+  }
+  
+  h4 {
+    font-family: "roobert_medium", sans-serif;
+    font-size: 12px;
+    opacity: 0.7; 
+    margin-bottom: 8px;
+    text-align: left;
+  }
+`
+
 const Avatar = styled.div`
-  width: 90px;
-  height: 90px;
-  margin: 0.4em auto 1em auto;
+  width: 100px;
+  height: 100px;
+  margin: 0;
   border-radius:100%;
   background-size: cover;
 `
 
+const SmallAvatar = styled.div`
+  width: 60px;
+  height: 60px;
+  margin: 0;
+  border-radius:100%;
+  margin-bottom: 20px;
+  background-size: cover;
+`
+
+
+const Button = styled.div`
+  font-family: "roobert_bold", sans-serif;
+  width: 100%;
+  display: block;
+  font-size: 16px;
+  background-color: red;
+  height: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background-color: white;
+  transition: all 0.2s ease; 
+
+  box-shadow: 0px 12px 25px -10px rgba(18, 20, 39, 0.4);
+
+  :hover {
+    cursor: pointer;
+    transform: translateY(-3px); 
+    transition: all 0.2s ease; 
+    box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
+  }
+
+
+  :active {
+    cursor: pointer;
+    transform: scale(0.98); 
+    transition: all 0.2s ease; 
+    box-shadow: 0px 12px 30px -10px rgba(18, 20, 39, 0.7);
+  }
+
+`
+
+const CardInfo = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; 
+  color: white;
+`
+
 const PriestList = [
   {
-    name: "Vitalik",
-    avatar: "vitalik.png",
-    text: "Vitalik, impress. Happy, clapping, Vitalik is impress",
+    name: "Kevin Owocki",
+    avatar: "kevin.png",
+    followers: "18",
+    activeDAI: "200.21 / 0.001",
+    backgroundColor: "linear-gradient(198.2deg, #FFD765 1.54%, #F7C444 89.85%)",
     projects: ["rdai", "tornado", "moloch"]
   },
   {
-    name: "Vitalik",
-    avatar: "vitalik.png",
-    text: "Vitalik, impress. Happy, clapping, Vitalik is impress",
+    name: "Meta Cartel",
+    avatar: "metacartel.png",
+    followers: "21",
+    activeDAI: "50.22 / 0.002",
+    backgroundColor: "linear-gradient(198.2deg, #E65676 1.54%, #DB4967 89.85%)",
+    projects: ["rdai", "tornado", "moloch"]
+  },
+  {
+    name: "Kevin Owocki",
+    avatar: "andrew.png",
+    followers: "21",
+    activeDAI: "10.91 / 0.001",
+    backgroundColor: "linear-gradient(198.2deg, #7E58F5 1.54%, #6A36F4 89.85%)",
+    projects: ["rdai", "tornado", "moloch"]
+  }
+]
+
+const PriestListOutside = [
+  {
+    name: "Kevin Owocki",
+    avatar: "kevin.png",
+    followers: "18",
+    activeDAI: "200.21 / 0.001",
+    projects: ["rdai", "tornado", "moloch"]
+  },
+  {
+    name: "Meta Cartel",
+    avatar: "metacartel.png",
+    followers: "21",
+    activeDAI: "50.22 / 0.002",
+    projects: ["rdai", "tornado", "moloch"]
+  },
+  {
+    name: "Kevin Owocki",
+    avatar: "andrew.png",
+    followers: "21",
+    activeDAI: "10.91 / 0.001",
+    projects: ["rdai", "tornado", "moloch"]
+  },
+  {
+    name: "Kevin Owocki",
+    avatar: "andrew.png",
+    followers: "21",
+    activeDAI: "10.91 / 0.001",
     projects: ["rdai", "tornado", "moloch"]
   }
 ]
 
 const cardMap = PriestList.map(item => {
   return(
-    <Card>
-      <Avatar
-        style={{ backgroundImage: `url(${require("../../images/" + item.avatar)})` }}
-      />
-      <CardTitle>{ item.name }</CardTitle>
-      <CardText>{ item.text }</CardText>
+    <Card backgroundColor={ item.backgroundColor }>
+      <CardInfo>
+        <Avatar
+          style={{ backgroundImage: `url(${require("../../images/" + item.avatar)})` }}
+        />
+        <CardTitle>{ item.name }</CardTitle>
+        <CardDetails>
+          <CardDetail>
+            <h4>Followers</h4>
+            <h3> { item.followers } </h3>
+          </CardDetail>
+          <CardDetail>
+            <h4>Active DAI</h4>
+            <h3>{ item.activeDAI } </h3>
+          </CardDetail>
+        </CardDetails>
+      </CardInfo>
+      <Button>Join the club</Button>
     </Card>
+  )
+})
+
+
+const smallCardMap = PriestListOutside.map(item => {
+  return(
+    <SmallCard>
+      <CardInfo>
+        <SmallAvatar
+          style={{ backgroundImage: `url(${require("../../images/" + item.avatar)})` }}
+        />
+        <SmallCardTitle>{ item.name }</SmallCardTitle>
+        <CardDetails>
+          <SmallCardDetail>
+            <h4>Followers</h4>
+            <h3> { item.followers } </h3>
+          </SmallCardDetail>
+          <SmallCardDetail>
+            <h4>Active DAI</h4>
+            <h3>{ item.activeDAI } </h3>
+          </SmallCardDetail>
+        </CardDetails>
+      </CardInfo>
+    </SmallCard>
   )
 })
 
@@ -156,19 +343,19 @@ const MainPage = () => {
 
   return (
     <Container>
-      <H1>High Priests</H1>
+      <H1>Donate towards causes these people support</H1>
       <P>
-        Donate to Open Source the interest your DAI generates<br />
-        Help fund teams building public goods on Ethereum <br />
-        You can stop donating at any time.
+        Donate your generated DAI interest towards projects chosen by community leaders.
+        Stop donating at any time.
       </P>
-      <LearnButton to="/about">Learn how it works</LearnButton>
       <StarterContainer>
         <CardContainer>
           { cardMap }
         </CardContainer>
+        <SmallCardContainer>
+          { smallCardMap }
+        </SmallCardContainer>
       </StarterContainer>
-      <StatsContainer></StatsContainer>
     </Container>
   )
 }

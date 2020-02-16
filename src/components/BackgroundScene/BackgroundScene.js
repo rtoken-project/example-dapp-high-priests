@@ -14,8 +14,8 @@ const BackgroundContainer = styled.div`
   width: 100%;
   height: 100%;
   left: 0;
-  bottom: -8%;
-  background-image: url(${backgroundImage});
+  bottom: 0;
+  background-color: #121427;
   background-size: cover;
   background-position: 50% 100%;
 
