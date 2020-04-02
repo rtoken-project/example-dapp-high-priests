@@ -18,6 +18,7 @@ const Leaderboard = ({ rows, sortByRate }) => {
     newRow[0] = <EtherscanLink address={row[0]} />
     newRow[1] = Math.round(row[1] * 100) / 100
     newRow[2] = Math.round(row[2])
+    // eslint-disable-next-line
     newRow[3] = row[3]
     return newRow
   })

@@ -2,27 +2,18 @@ import React from "react"
 
 import styled from "styled-components"
 import Layout from "../components/Layout/Layout"
+import { MissingDappy } from "../components/Flock/VisualComponents"
 import SEO from "../components/seo"
-import RedeemDappy from "../components/Redeem/RedeemDappy"
 
 const CenteredContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-`
-
-const Background = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #121427;
+  backgroundcolor: #121427;
 `
 
 const H1 = styled.h1`
-  z-index: 99;
   position: relative;
   font-family: "roobert_medium", sans-serif;
   font-weight: 900;
@@ -41,7 +32,6 @@ const H1 = styled.h1`
 `
 
 const P = styled.p`
-  z-index: 99;
   position: relative;
   font-family: "roobert_medium", sans-serif;
   font-size: 22px;
@@ -59,15 +49,13 @@ const P = styled.p`
 const StopPage = () => (
   <Layout>
     <SEO title="Stop Donating" />
-
     <CenteredContainer>
       <div>
         <H1>Farewell, devoted member of the flock</H1>
         <P>Thanks for donating!</P>
-        <RedeemDappy />
+        <MissingDappy />
       </div>
     </CenteredContainer>
-    <Background />
   </Layout>
 )
 

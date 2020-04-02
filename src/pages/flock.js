@@ -1,7 +1,7 @@
 import React from "react"
+import Loadable from "react-loadable"
 import SEO from "../components/seo"
 import Layout from "../components/Layout/Layout"
-import Loadable from "react-loadable"
 
 const Loading = props => {
   if (props.error) {
@@ -11,18 +11,19 @@ const Loading = props => {
         Error! <button onClick={() => location.reload()}>Retry</button>
       </div>
     )
-  } else if (props.pastDelay) {
-    return <div></div>
-  } else if (props.timedOut) {
+  }
+  if (props.pastDelay) {
+    return <div />
+  }
+  if (props.timedOut) {
     return (
       <div>
         Taking a long time...{" "}
         <button onClick={() => location.reload()}>Retry</button>
       </div>
     )
-  } else {
-    return null
   }
+  return null
 }
 
 const LoadableFlock = Loadable({

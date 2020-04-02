@@ -19,6 +19,12 @@ export const projectList = [
   { id: 13, name: "ETHTurin", url: "https://ethturin.com/" },
   { id: 14, name: "DAppNode", url: "https://dappnode.io" },
   { id: 15, name: "CryptoScamDB", url: "https://cryptoscamdb.org" },
+  { id: 16, name: "White Hat Hacking", url: "https://samczsun.com/research/" },
+  {
+    id: 17,
+    name: "Chris Blec Defi Videos",
+    url: "https://youtube.com/chrisblec",
+  },
 ]
 
 export const priestList = [
@@ -132,5 +138,17 @@ export const priestList = [
     totalDAI: "loading",
     projects: [7, 8, 11],
     hatID: 78,
+  },
+  {
+    name: "EthHub",
+    firstName: "EthHub",
+    lastName: "",
+    avatar: "ethhub.png",
+    bio: "A Trusted Source in a Trustlesss World",
+    twitter: "ethhub_io",
+    followerCount: "loading",
+    totalDAI: "loading",
+    projects: [16, 17, 14],
+    hatID: 131,
   },
 ]

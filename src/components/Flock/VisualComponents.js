@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
-import hat from "../../images/hat.svg"
 import styled from "styled-components"
 import { Link } from "gatsby"
+import hat from "../../images/hat.svg"
 
 export const InitialContainer = styled.div`
   width: 313px;
@@ -172,3 +172,16 @@ export const InitialFollower = ({
     </FollowerContainer>
   )
 }
+
+export const MissingDappy = () => (
+  <InitialContainer>
+    <h3>😭😭😭😭</h3> <p>We're sorry! The Dappy package is closed source...</p>
+    <p>
+      Contact the{" "}
+      <a href="https://dappy.dev" target="_blank" rel="noopener">
+        dappy team
+      </a>{" "}
+      for help
+    </p>
+  </InitialContainer>
+)

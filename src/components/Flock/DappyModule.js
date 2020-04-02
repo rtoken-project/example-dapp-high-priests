@@ -1,28 +1,24 @@
-import React, { useContext, useEffect, useState } from "react"
-import hat from "../../images/hat.svg"
-import styled from "styled-components"
-import Dappy from "./Dappy"
-import { Link } from "gatsby"
+// *************************************
+// We're sorry! This component uses "Dappy",
+// a closed-source package created by the team at https://dappy.dev
+// It is purposefully ommited from this repo  :_(
+// If you're interested in working on Dappy,
+// or want to chat then drop us a line!
+// *************************************
 
-import { InitialNonFollower, InitialFollower } from "./VisualComponents"
+import React, { useContext, useEffect, useState } from "react"
+import styled from "styled-components"
+import { Link } from "gatsby"
+import hat from "../../images/hat.svg"
+
 import {
-  UnlockWalletVisual,
-  InstallWalletVisual,
-  ChangeNetworkVisual,
-  LoadWalletVisual,
-  InsufficientBalanceVisual,
-  PreApproveVisual,
-  TxConfirmVisual,
-  TxErrorVisual,
-  TxPendingBasicVisual,
-  PreMintVisual,
-  TxPendingMintVisual,
-  SuccessVisual,
-  TxAbortedVisual,
-} from "./Feather"
+  InitialNonFollower,
+  InitialFollower,
+  MissingDappy,
+} from "./VisualComponents"
 
 const BASE_AMOUNT = 40
-const HIGHER_AMOUNT = 300
+const HIGHER_AMOUNT = 120
 
 const nonFollowerOptions = {
   id: "nonFollower",
@@ -43,7 +39,7 @@ const nonFollowerOptions = {
       type: "basic",
       visualComponents: {
         initial: {
-          visual: InitialNonFollower,
+          visual: "InitialNonFollower",
           props: {
             amountDAI: BASE_AMOUNT,
             firstName: "",
@@ -59,19 +55,19 @@ const nonFollowerOptions = {
       type: "unlock-wallet",
       visualComponents: {
         unlock: {
-          visual: UnlockWalletVisual,
+          visual: "UnlockWalletVisual",
           props: {},
         },
         install: {
-          visual: InstallWalletVisual,
+          visual: "InstallWalletVisual",
           props: {},
         },
         network: {
-          visual: ChangeNetworkVisual,
+          visual: "ChangeNetworkVisual",
           props: {},
         },
         error: {
-          visual: TxErrorVisual,
+          visual: "TxErrorVisual",
           props: {},
         },
       },
@@ -89,15 +85,15 @@ const nonFollowerOptions = {
       allowSwap: false,
       visualComponents: {
         loading: {
-          visual: LoadWalletVisual,
+          visual: "LoadWalletVisual",
           props: {},
         },
         insufficientBalance: {
-          visual: InsufficientBalanceVisual,
+          visual: "InsufficientBalanceVisual",
           props: {},
         },
         error: {
-          visual: TxErrorVisual,
+          visual: "TxErrorVisual",
           props: {},
         },
       },
@@ -110,7 +106,7 @@ const nonFollowerOptions = {
       type: "prompt", // Since the user can select an option, and setContext is called
       visualComponents: {
         preApprove: {
-          visual: PreApproveVisual,
+          visual: "PreApproveVisual",
           props: {},
         },
       },
@@ -124,19 +120,19 @@ const nonFollowerOptions = {
       functionName: "approve",
       visualComponents: {
         confirming: {
-          visual: TxPendingBasicVisual,
+          visual: "TxPendingBasicVisual",
           props: {},
         },
         error: {
-          visual: TxErrorVisual,
+          visual: "TxErrorVisual",
           props: {},
         },
         aborted: {
-          visual: TxAbortedVisual,
+          visual: "TxAbortedVisual",
           props: {},
         },
         confirm: {
-          visual: TxConfirmVisual,
+          visual: "TxConfirmVisual",
           props: {},
         },
       },
@@ -149,7 +145,7 @@ const nonFollowerOptions = {
       type: "basic",
       visualComponents: {
         default: {
-          visual: PreMintVisual,
+          visual: "PreMintVisual",
           props: {
             totalAmount: BASE_AMOUNT,
           },
@@ -166,19 +162,19 @@ const nonFollowerOptions = {
       hatId: "75",
       visualComponents: {
         confirming: {
-          visual: TxPendingMintVisual,
+          visual: "TxPendingMintVisual",
           props: {},
         },
         error: {
-          visual: TxErrorVisual,
+          visual: "TxErrorVisual",
           props: {},
         },
         aborted: {
-          visual: TxAbortedVisual,
+          visual: "TxAbortedVisual",
           props: {},
         },
         confirm: {
-          visual: TxConfirmVisual,
+          visual: "TxConfirmVisual",
           props: {},
         },
       },
@@ -191,7 +187,7 @@ const nonFollowerOptions = {
       type: "basic",
       visualComponents: {
         default: {
-          visual: SuccessVisual, // todo
+          visual: "SuccessVisual", // todo
           props: {
             onSubmitActionType: "props",
             onSubmit: event => {
@@ -230,7 +226,7 @@ const followerOptions = {
       type: "basic",
       visualComponents: {
         initial: {
-          visual: InitialFollower,
+          visual: "InitialFollower",
           props: {
             amountActive: 0,
             amountDAI: HIGHER_AMOUNT,
@@ -246,19 +242,19 @@ const followerOptions = {
       type: "unlock-wallet",
       visualComponents: {
         unlock: {
-          visual: UnlockWalletVisual,
+          visual: "UnlockWalletVisual",
           props: {},
         },
         install: {
-          visual: InstallWalletVisual,
+          visual: "InstallWalletVisual",
           props: {},
         },
         network: {
-          visual: ChangeNetworkVisual,
+          visual: "ChangeNetworkVisual",
           props: {},
         },
         error: {
-          visual: TxErrorVisual,
+          visual: "TxErrorVisual",
           props: {},
         },
       },
@@ -276,15 +272,15 @@ const followerOptions = {
       allowSwap: false,
       visualComponents: {
         loading: {
-          visual: LoadWalletVisual,
+          visual: "LoadWalletVisual",
           props: {},
         },
         insufficientBalance: {
-          visual: InsufficientBalanceVisual,
+          visual: "InsufficientBalanceVisual",
           props: {},
         },
         error: {
-          visual: TxErrorVisual,
+          visual: "TxErrorVisual",
           props: {},
         },
       },
@@ -297,7 +293,7 @@ const followerOptions = {
       type: "prompt", // Since the user can select an option, and setContext is called
       visualComponents: {
         preApprove: {
-          visual: PreApproveVisual,
+          visual: "PreApproveVisual",
           props: {},
         },
       },
@@ -311,19 +307,19 @@ const followerOptions = {
       functionName: "approve",
       visualComponents: {
         confirming: {
-          visual: TxPendingBasicVisual,
+          visual: "TxPendingBasicVisual",
           props: {},
         },
         error: {
-          visual: TxErrorVisual,
+          visual: "TxErrorVisual",
           props: {},
         },
         aborted: {
-          visual: TxAbortedVisual,
+          visual: "TxAbortedVisual",
           props: {},
         },
         confirm: {
-          visual: TxConfirmVisual,
+          visual: "TxConfirmVisual",
           props: {},
         },
       },
@@ -336,7 +332,7 @@ const followerOptions = {
       type: "basic",
       visualComponents: {
         default: {
-          visual: PreMintVisual,
+          visual: "PreMintVisual",
           props: {
             totalAmount: HIGHER_AMOUNT,
           },
@@ -353,19 +349,19 @@ const followerOptions = {
       hatId: "75",
       visualComponents: {
         confirming: {
-          visual: TxPendingMintVisual,
+          visual: "TxPendingMintVisual",
           props: {},
         },
         error: {
-          visual: TxErrorVisual,
+          visual: "TxErrorVisual",
           props: {},
         },
         aborted: {
-          visual: TxAbortedVisual,
+          visual: "TxAbortedVisual",
           props: {},
         },
         confirm: {
-          visual: TxConfirmVisual,
+          visual: "TxConfirmVisual",
           props: {},
         },
       },
@@ -378,7 +374,7 @@ const followerOptions = {
       type: "basic",
       visualComponents: {
         default: {
-          visual: SuccessVisual, // todo
+          visual: "SuccessVisual", // todo
           props: {
             onSubmitActionType: "props",
             onSubmit: event => {
@@ -399,38 +395,29 @@ const followerOptions = {
   },
 }
 
-// <img src={hat} />
-// <h3>Join Kevin's flock</h3>
-// <p>Support Kevin’s selected causes with interest your DAI generates.</p>
-
 const onToggleActive = id => {
   console.log(`Dappy ${id} is active`)
 }
 
 const DappyModule = ({ isFollower, firstName, hatID, amountActive }) => {
+  const [clicked, setClicked] = useState(false)
+  const onSubmit = () => setClicked(true)
+
   nonFollowerOptions.stepDetails.initial.visualComponents.initial.props.firstName = firstName
   nonFollowerOptions.stepDetails.mintWithSelectedHat.hatID = hatID
+  followerOptions.stepDetails.mintWithSelectedHat.hatID = hatID
   followerOptions.stepDetails.initial.visualComponents.initial.props.amountActive = amountActive
   if (firstName === "") {
     return <>Loading...</>
   }
   if (isFollower) {
-    return (
-      <Dappy
-        options={followerOptions}
-        onToggleActive={onToggleActive}
-        infuraKey={process.env.REACT_APP_INFURA_ENDPOINT_KEY}
-      />
-    )
+    return <InitialFollower onSubmit={onSubmit} />
+  }
+  if (clicked) {
+    return <MissingDappy />
   }
 
-  return (
-    <Dappy
-      options={nonFollowerOptions}
-      onToggleActive={onToggleActive}
-      infuraKey={process.env.REACT_APP_INFURA_ENDPOINT_KEY}
-    />
-  )
+  return <InitialNonFollower onSubmit={onSubmit} />
 }
 
 export default DappyModule

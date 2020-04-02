@@ -11,5 +11,3 @@ export const HATIDS = {
   kovan: 15,
   homestead: 11,
 }
-
-

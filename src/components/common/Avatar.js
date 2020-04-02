@@ -14,6 +14,7 @@ const Avatar = ({ image }) => {
   return (
     <Round
       style={{
+        // eslint-disable-next-line
         backgroundImage: `url(${require(`../../images/${image}`)})`,
       }}
     />

@@ -1,17 +1,18 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
-import Logo from "../../../images/logo.svg"
-import Web3Utils from "../../Flock/Web3/Web3Utils"
 import axios from "axios"
-const API_URL = "https://api.rdai.money"
+import Web3Utils from "../../Flock/Web3/Web3Utils"
 
 import logo from "../../../images/hat.svg"
 
-const StyledButton = styled(Link)`
+const API_URL = "https://api.rdai.money"
+
+const StyledButton = styled.button`
   font-family: "roobert_semibold";
   font-size: 15px;
   color: white;
+  background-color: #121427;
   text-decoration: none;
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 50px;
@@ -32,6 +33,7 @@ const StyledButton = styled(Link)`
   }
 
   &:active {
+    border: 1px solid white;
     transform: scale(0.97);
     transition: transform 0.2s ease;
   }

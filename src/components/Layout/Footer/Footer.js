@@ -11,7 +11,6 @@ const StyledLink = styled.a`
   transition: all 0.2s ease;
   position: relative;
 
-
   &:hover {
     transform: scale(1.03);
     transition: all 0.2s ease;

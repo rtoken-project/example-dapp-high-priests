@@ -1,3 +1,10 @@
+// *************************************
+// WARNING WARNING WARNING WARNING
+// Web3Utils.js was created by the team at https://dappy.dev
+// It is the web3 engine which powers Dappy
+// It is not updated or maintained here, so use at your own risk!!!!
+// *************************************
+
 const ethers = require("ethers")
 const CONTRACTS = require("./constants")
 require("babel-polyfill")
@@ -15,9 +22,7 @@ class Web3Utils {
       walletAddress = await window.ethereum.enable()
       localStorage.setItem("walletAddress", walletAddress[0])
 
-      const walletProvider = new ethers.providers.Web3Provider(
-        window.web3.currentProvider
-      )
+      const walletProvider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await walletProvider.getNetwork()
       return {
         hasWallet: true,

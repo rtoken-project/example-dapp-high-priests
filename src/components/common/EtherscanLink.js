@@ -1,18 +1,18 @@
 import React from "react"
 
 const EtherscanLink = ({ address, network }) => {
+  let networkString = `${network}.`
   if (
     network === "homestead" ||
     network === "mainnet" ||
     network === null ||
-    typeof network === "undefined"
+    typeof networkString === "undefined"
   )
-    network = ""
-  else network += "."
+    networkString = ""
   let url = "empty"
   let linkText = "empty "
   if (address && address.search(/0x[0-9a-bA-z]{40}/) === 0) {
-    url = `https://${network}etherscan.io/address/${address}`
+    url = `https://${networkString}etherscan.io/address/${address}`
     linkText = `${address.slice(0, 6)}...${address.slice(38, 42)}`
   } else if (address && address.search(/.eth/) > 0) {
     url = `https://etherscan.io/enslookup?q=${address}`
